@@ -32,7 +32,14 @@
         "subcategory": "Examples",
         "title": "Object Collision",
         "description": "Wrap the matter component into a class to associate it with other attributes",
-        "path": "Matter/ObjectCollision",
+        "path": "Matter/ObjectCollision"
+    },
+    {
+        "category": "Matter-js",
+        "subcategory": "Examples",
+        "title": "Character Definition",
+        "description": "Create a movable character with the ability to shoot projectiles",
+        "path": "Matter/Character",
         "indev": true
     }
 ]
