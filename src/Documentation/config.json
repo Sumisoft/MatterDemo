@@ -1,0 +1,31 @@
+[
+    {
+        "category": "Demo",
+        "subcategory": "First Example",
+        "title": "Very Basic example",
+        "description": "Description of my very basic example",
+        "path": "Demo/BasicExample"
+    },
+    {
+        "category": "Matter-js",
+        "subcategory": "Examples",
+        "title": "Simple Framework",
+        "description": "Simple example to test configuration",
+        "path": "Matter/Simple"
+    },
+    {
+        "category": "Matter-js",
+        "subcategory": "Examples",
+        "title": "Moving Object",
+        "description": "Move object automatically across screen",
+        "path": "Matter/Movement"
+    },
+    {
+        "category": "Matter-js",
+        "subcategory": "Examples",
+        "title": "Simple Collision",
+        "description": "Object moves and collides with another",
+        "path": "Matter/SimpleCollision",
+        "indev": true
+    }
+]
