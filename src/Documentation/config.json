@@ -25,7 +25,14 @@
         "subcategory": "Examples",
         "title": "Simple Collision",
         "description": "Object moves and collides with another",
-        "path": "Matter/SimpleCollision",
+        "path": "Matter/SimpleCollision"
+    },
+    {
+        "category": "Matter-js",
+        "subcategory": "Examples",
+        "title": "Object Collision",
+        "description": "Wrap the matter component into a class to associate it with other attributes",
+        "path": "Matter/ObjectCollision",
         "indev": true
     }
 ]

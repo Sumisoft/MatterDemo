@@ -19,9 +19,9 @@ class Scene extends React.Component {
       Composites = Matter.Composites,
       MouseConstraint = Matter.MouseConstraint;
 
-    var engine = Engine.create({
-      // positionIterations: 20
-    });
+    var engine = Engine.create({});
+    engine.world.gravity.y = 0;
+
 
     var render = Render.create({
       element: this.refs.scene,
@@ -34,7 +34,7 @@ class Scene extends React.Component {
     });
 
     var rectA = Bodies.rectangle(310, 250, 30, 50, { restitution: 0.5 });
-    var ballB = Bodies.circle(110, 250, 30, { restitution: 0.5 });
+    var ballB = Bodies.circle(110, 250, 10, { restitution: 0.5 });
     World.add(engine.world, [
       // walls
       Bodies.rectangle(300, 300, 600, 50, { isStatic: true }),
