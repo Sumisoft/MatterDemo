@@ -7,11 +7,11 @@ const CHAR_HEIGHT = 50
 
 class matterCharacter extends matterObj{
 
-  constructor( x, y, health, engine){
+  constructor( x, y, health, category){
     super(health)
-    this.engine = engine
-    this.createdOn = engine.timing.timestamp
-    this.updatedOn = engine.timing.timestamp
+    this.createdOn = undefined
+    this.updatedOn = undefined
+    this.category = category
 
     this.projectiles = []
 
@@ -25,7 +25,7 @@ class matterCharacter extends matterObj{
       maxDistance: 0
     }
 
-    this.rectangle( x, y, CHAR_WIDTH, CHAR_HEIGHT )
+    this.addBody( x, y )
   }
 
   setMovement( speed ){
@@ -44,6 +44,41 @@ class matterCharacter extends matterObj{
     }
   }
 
+  getParams( category ){
+    const style = {
+      0: {
+        id: 0x0002,
+        category: 0x0002,
+        mask: 0x0004,
+        color: '#f55a3c'
+      },
+      1: {
+        id: 0x0004,
+        category: 0x0004,
+        mask: 0x0002,
+        color: '#063e7b'
+      },
+    }
+
+    return {
+      collisionFilter: {
+          category: style[category].category,
+          mask: style[category].mask
+      },
+      render: {
+          strokeStyle: style[category].color,
+          fillStyle: 'transparent',
+          lineWidth: 2
+      }
+    }
+  }
+
+  addBody( x, y ){
+
+    const params = this.getParams(this.category)
+    this.rectangle( x, y, CHAR_WIDTH, CHAR_HEIGHT, params )
+  }
+
   /// create a projectile object, add it to the world and
   /// store it into a buffer for future use
   addProjectile(engine){
@@ -54,7 +89,9 @@ class matterCharacter extends matterObj{
     if( this.projectile.speed < 0 ) x = this.body.position.x - CHAR_WIDTH
 
     const y = this.body.position.y
-    projObj.circle(x, y, 10)
+    const params = this.getParams(this.category)
+
+    projObj.circle(x, y, 10, params)
 
     projObj.setVelocity(this.projectile.speed, 0)
 
@@ -66,7 +103,10 @@ class matterCharacter extends matterObj{
   // update the world periodically
   update( engine ){
     const timestamp = engine.timing.timestamp
+    if( this.updatedOn === undefined ) this.updatedOn = engine.timing.timestamp
+
     const lastUpdated = Math.floor((timestamp - this.updatedOn)/1000)
+
     if( this.projectile.rate > 0 ){
       if( lastUpdated > this.projectile.rate ){
         this.addProjectile(engine)
@@ -103,6 +143,13 @@ class matterCharacter extends matterObj{
 
   }
 
+  bodyCollision(bodyA, bodyB, engine){
+    if( (this.body === bodyA)|(this.body === bodyB) ){
+      return this.collision(engine)
+    }
+
+    return false
+  }
 
 }
 

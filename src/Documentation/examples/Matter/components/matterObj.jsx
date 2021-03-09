@@ -11,12 +11,12 @@ class matterObj{
     this.health = health
   }
 
-  rectangle( x, y, h, w ){
-    this.body = Matter.Bodies.rectangle(x, y, h, w, { restitution: 0.5 });
+  rectangle( x, y, h, w, params={} ){
+    this.body = Matter.Bodies.rectangle(x, y, h, w, params);
   }
 
-  circle( x, y, r ){
-    this.body = Matter.Bodies.circle(x, y, r, { restitution: 0.5 });
+  circle( x, y, r, params={} ){
+    this.body = Matter.Bodies.circle(x, y, r, params);
 
     this.body.friction = 0.05;
     this.body.frictionAir = 0.0005;

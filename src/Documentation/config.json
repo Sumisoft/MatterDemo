@@ -39,7 +39,35 @@
         "subcategory": "Examples",
         "title": "Character Definition",
         "description": "Create a movable character with the ability to shoot projectiles",
-        "path": "Matter/Character",
+        "path": "Matter/Character"
+    },
+    {
+        "category": "Matter-js",
+        "subcategory": "Characters",
+        "title": "DualingCharacters",
+        "description": "Two characters dual against each other with projectiles",
+        "path": "Matter/DualingCharacters"
+    },
+    {
+        "category": "Matter-js",
+        "subcategory": "Characters",
+        "title": "Friendly Fire",
+        "description": "Two characters on the same side shouldt be able to attack on another",
+        "path": "Matter/FriendlyFire"
+    },
+    {
+        "category": "Matter-js",
+        "subcategory": "Game Board",
+        "title": "Simple Grid",
+        "description": "Simple layout made of static objects",
+        "path": "Matter/Board/Grid"
+    },
+    {
+        "category": "Matter-js",
+        "subcategory": "Game Board",
+        "title": "Board Class",
+        "description": "Game board made from a class",
+        "path": "Matter/Board/Board",
         "indev": true
     }
 ]
