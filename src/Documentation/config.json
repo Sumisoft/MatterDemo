@@ -67,7 +67,15 @@
         "subcategory": "Game Board",
         "title": "Board Class",
         "description": "Game board made from a class",
-        "path": "Matter/Board/Board",
+        "path": "Matter/Board/Board"
+    },
+    {
+        "category": "Events",
+        "subcategory": "Tunneling",
+        "title": "Tunnel Prevention",
+        "description": "Prvent objects from passing through walls",
+        "path": "Matter/Events/Tunneling",
         "indev": true
     }
+
 ]
