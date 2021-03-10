@@ -105,26 +105,26 @@ class BoardTest extends React.Component {
 
     World.add(engine.world, mouseConstraint);
 
-    Matter.Events.on(mouseConstraint, "mousedown", function(event) {
-      var mouse = mouseConstraint.mouse,
-          constraint = mouseConstraint.constraint,
-          body = mouseConstraint.body;
-
-      if (mouse.button === 0) {
-        var t = new matterCharacter(
-          constraint.pointA.x,
-          constraint.pointA.y,
-          3,
-          1)
-
-        t.setProjectiles(1, 2)
-        targets.push( t )
-
-        World.add(engine.world, t.body);
-
-
-      }
-    });
+    // Matter.Events.on(mouseConstraint, "mousedown", function(event) {
+    //   var mouse = mouseConstraint.mouse,
+    //       constraint = mouseConstraint.constraint,
+    //       body = mouseConstraint.body;
+    //
+    //   if (mouse.button === 0) {
+    //     var t = new matterCharacter(
+    //       constraint.pointA.x,
+    //       constraint.pointA.y,
+    //       3,
+    //       1)
+    //
+    //     t.setProjectiles(1, 2)
+    //     targets.push( t )
+    //
+    //     World.add(engine.world, t.body);
+    //
+    //
+    //   }
+    // });
 
     Events.on(engine, 'afterUpdate', function(event) {
       targets.forEach((character) => character.update(engine))

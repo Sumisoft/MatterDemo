@@ -16,6 +16,8 @@ export class cell{
     if( keys.includes('height') ) this.height = props.height
     if( keys.includes('width') ) this.width = props.width
     if( keys.includes('valid') ) this.valid = props.valid
+    if( keys.includes('vspacer') ) this.vspacer = props.vspacer
+    if( keys.includes('hspacer') ) this.hspacer = props.hspacer
 
   }
 
@@ -28,16 +30,23 @@ export class cell{
   get width(){ return this.cellWidth }
   set width(value){ this.cellWidth = value}
 
+  get vspacer(){ return this.cellVspacer }
+  set vspacer(value){ this.cellVspacer = value}
+
+  get hspacer(){ return this.cellHspacer }
+  set hspacer(value){ this.cellHspacer = value}
+
   // returns a static MatterJS body representing the cell
   createBody(){
 
     if( this.occupied === true ) return undefined
     if( this.valid === false ) return undefined
 
-
+    const width = this.cellWidth + this.cellHspacer
+    const height = this.cellHeight + this.cellVspacer
     return Matter.Bodies.rectangle(
-      this.cellPosition[0]*this.cellWidth + this.cellWidth/2,
-      this.cellPosition[1]*this.cellHeight + this.cellHeight/2,
+      this.cellPosition[0]*width + width/2,
+      this.cellPosition[1]*height + height/2,
       this.cellWidth,
       this.cellHeight,
       {

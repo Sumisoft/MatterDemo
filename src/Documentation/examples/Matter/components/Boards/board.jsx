@@ -9,6 +9,12 @@ export class board{
 
     // default defintions
     this.board = []
+    this.spacers = []
+
+    this.hSpacerWidth = 5
+    this.hSpacerHeight = props.height
+    this.vSpacerWidth = props.width
+    this.vSpacerHeight = 0
 
     const keys = Object.keys(props)
     if( keys.includes('positions') ) this.positions = props.positions
@@ -23,13 +29,16 @@ export class board{
   get height(){ return this.boardHeight }
   set height(value){
     this.boardlHeight = value
+    this.spacerHeight = value
     this.cellHeight = value/this.boardPositions[1]
   }
 
   get width(){ return this.boardlWidth }
   set width(value){
     this.boardlWidth = value
-    this.cellWidth = value/this.boardPositions[0]
+
+    const spacerBuffer = (this.boardPositions[0]+1) * this.hSpacerWidth
+    this.cellWidth = (value - spacerBuffer)/this.boardPositions[0]
   }
 
   // creates a matrix containing cell objects
@@ -47,6 +56,8 @@ export class board{
             position: [x,y],
             width: this.cellWidth,
             height: this.cellHeight,
+            hspacer: this.hSpacerWidth,
+            vspacer: this.vSpacerHeight,
             valid: Math.random() < 0.5
           })
 
@@ -58,6 +69,37 @@ export class board{
 
   }
 
+  addVSpacers(engine){
+
+    var vspacers = []
+    for( var x=0; x < this.boardPositions[0]+1; x++ ){
+      const spacer = Matter.Bodies.rectangle(
+        x*this.cellWidth,
+        this.hSpacerHeight/2,
+        this.hSpacerWidth,
+        this.hSpacerHeight,
+        {
+          isStatic: true,
+          collisionFilter: {
+            category: 0x0001,
+            mask: 0x0001
+          },
+          render: {
+            strokeStyle: 'yellow',
+            fillStyle: 'transparent',
+            lineWidth: 2
+          }
+        }
+      )
+
+
+      vspacers.push(spacer)
+    }
+
+    Matter.World.add(engine.world, vspacers)
+
+  }
+
   // create a body for each cell and adds it to the work
   add( engine ){
     // .map(t => t.createBody())
@@ -66,6 +108,9 @@ export class board{
       .reduce((pre, cur) => pre.concat(cur));
 
     Matter.World.add(engine.world, bodies);
+
+    this.addVSpacers(engine)
+
   }
 
 
