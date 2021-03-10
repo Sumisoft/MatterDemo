@@ -50,7 +50,8 @@ export class cell{
       this.cellWidth,
       this.cellHeight,
       {
-        isStatic: true,
+        // isStatic: true,
+        inertia: Infinity,
         collisionFilter: {
             category: 0x0001,
             mask: 0x0001

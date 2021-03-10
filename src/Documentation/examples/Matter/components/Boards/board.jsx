@@ -69,12 +69,14 @@ export class board{
 
   }
 
+  // adds vertical spacers to allow the objects to move without
+  // a vertical shaft
   addVSpacers(engine){
 
     var vspacers = []
     for( var x=0; x < this.boardPositions[0]+1; x++ ){
       const spacer = Matter.Bodies.rectangle(
-        x*this.cellWidth,
+        x*(this.cellWidth + this.hSpacerWidth),
         this.hSpacerHeight/2,
         this.hSpacerWidth,
         this.hSpacerHeight,
