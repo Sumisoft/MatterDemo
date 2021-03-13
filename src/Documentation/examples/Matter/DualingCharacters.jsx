@@ -1,7 +1,6 @@
 import React from "react";
 import Matter from "matter-js";
 
-import matterObj from './components/matterObj'
 import matterCharacter from './components/matterCharacter'
 
 class Scene extends React.Component {
@@ -14,13 +13,8 @@ class Scene extends React.Component {
     var Engine = Matter.Engine,
       Render = Matter.Render,
       World = Matter.World,
-      Body = Matter.Body,
       Bodies = Matter.Bodies,
-      Mouse = Matter.Mouse,
-      Events = Matter.Events,
-      Composite = Matter.Composite,
-      Composites = Matter.Composites,
-      MouseConstraint = Matter.MouseConstraint;
+      Events = Matter.Events;
 
     var engine = Engine.create({});
     engine.world.gravity.y = 0;
@@ -44,7 +38,6 @@ class Scene extends React.Component {
       // Bodies.rectangle(0, 300, 50, 600, { isStatic: false })
     ]);
 
-    var projectiles = []
     var targets = []
 
     var character = new matterCharacter(60, 250, 5, 0)
@@ -72,7 +65,6 @@ class Scene extends React.Component {
         targets.forEach((character) => {
           // var pair = pairs[i];
           var index
-          var projFlag = character.projCollision(bodyA, bodyB, engine)
 
           if( character.bodyCollision(bodyA, bodyB, engine) ){
             index = targets.indexOf(character)

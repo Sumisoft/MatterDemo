@@ -21,12 +21,9 @@ class Scene extends React.Component {
     var Engine = Matter.Engine,
       Render = Matter.Render,
       World = Matter.World,
-      Body = Matter.Body,
       Bodies = Matter.Bodies,
       Mouse = Matter.Mouse,
       Events = Matter.Events,
-      Composite = Matter.Composite,
-      Composites = Matter.Composites,
       MouseConstraint = Matter.MouseConstraint;
 
     var engine = Engine.create({});
@@ -86,8 +83,7 @@ class Scene extends React.Component {
 
     Matter.Events.on(mouseConstraint, "mousedown", function(event) {
       var mouse = mouseConstraint.mouse,
-          constraint = mouseConstraint.constraint,
-          body = mouseConstraint.body;
+          constraint = mouseConstraint.constraint
 
       if (mouse.button === 0) {
         var t = new matterCharacter(

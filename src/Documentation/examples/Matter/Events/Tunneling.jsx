@@ -15,8 +15,6 @@ class Scene extends React.Component {
       Bodies = Matter.Bodies,
       Mouse = Matter.Mouse,
       Events = Matter.Events,
-      Composite = Matter.Composite,
-      Composites = Matter.Composites,
       MouseConstraint = Matter.MouseConstraint;
 
     var engine = Engine.create({});
@@ -61,15 +59,12 @@ class Scene extends React.Component {
 
     World.add(engine.world, mouseConstraint);
 
-    var counter = -1
     var dragBody
-    var position
 
     Matter.Events.on(mouseConstraint, "mousedown", function(event) {
       // console.log(event.source.body)
       console.log('mouse down')
       dragBody = event.source.body;
-      position = event.source.body.position
       dragBody.isStatic = false
     });
 
@@ -84,6 +79,9 @@ class Scene extends React.Component {
 
     });
 
+      // "lint": "eslint src/**/*.js src/**/*.jsx",
+      // "lint:fix": "eslint --fix src/**/*.js src/**/*.jsx"
+        // "lint:fix": "./node_modules/.bin/eslint --fix src --ext .jsx,.js"
 
     Events.on(engine, 'collisionStart', function(event) {
       console.log( 'this is the dragging body', dragBody.position)
@@ -153,48 +151,3 @@ class Scene extends React.Component {
    }
  }
  export default Scene;
-
-
-
-
-class matterObj{
-
-  constructor( health ){
-    this.body = undefined
-    this.health = health
-  }
-
-  rectangle( x, y, h, w ){
-    this.body = Matter.Bodies.rectangle(x, y, h, w, { restitution: 0.5 });
-  }
-
-  circle( x, y, r ){
-    this.body = Matter.Bodies.circle(x, y, r, { restitution: 0.5 });
-
-    this.body.friction = 0.05;
-    this.body.frictionAir = 0.0005;
-    this.body.restitution = 0.9;
-  }
-
-  setVelocity( x, y ){
-    Matter.Body.setVelocity( this.body, {x: 5, y: 0})
-  }
-
-  isCollision( bodyA, bodyB){
-    if((bodyA === this.body)|(bodyB === this.body)) return true
-    return false
-  }
-
-  collision( engine ){
-
-    this.health = this.health - 1
-
-    if(this.health === 0){
-      Matter.World.remove(engine.world, this.body);
-      return true
-    }
-
-    return false
-  }
-
-}

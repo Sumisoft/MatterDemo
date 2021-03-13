@@ -2,7 +2,6 @@ import React from "react";
 import Matter from "matter-js";
 
 import board from '../components/Boards/board'
-import matterCharacter from '../components/matterCharacter'
 
 import {CONSTANTS} from '../components/constants'
 
@@ -16,12 +15,8 @@ class BoardTest extends React.Component {
     var Engine = Matter.Engine,
       Render = Matter.Render,
       World = Matter.World,
-      Body = Matter.Body,
-      Bodies = Matter.Bodies,
       Mouse = Matter.Mouse,
       Events = Matter.Events,
-      Composite = Matter.Composite,
-      Composites = Matter.Composites,
       MouseConstraint = Matter.MouseConstraint;
 
     var engine = Engine.create({});
@@ -130,43 +125,6 @@ class BoardTest extends React.Component {
       targets.forEach((character) => character.update(engine))
     });
 
-
-
-    var counter = -1
-
-    Matter.Events.on(engine, 'beforeUpdate', function(event) {
-   counter += 0.014;
-   if (counter < 0) { return; }
-   var px = 400 + 100 * Math.sin(counter);
-
-   if (dragBody != null) {
-      if (dragBody.velocity.x > 25.0) {
-          Matter.Body.setVelocity(dragBody, {x: 25, y: dragBody.velocity.y });
-      }
-      if (dragBody.velocity.y > 25.0) {
-          Matter.Body.setVelocity(dragBody, {x: dragBody.velocity.x, y: 25 });
-      }
-      if (dragBody.positionImpulse.x > 25.0) {
-          dragBody.positionImpulse.x = 25.0;
-      }
-      if (dragBody.positionImpulse.y > 25.0) {
-          dragBody.positionImpulse.y = 25.0;
-      }
-  }
-  });
-
-  var mouse = Matter.Mouse.create(render.canvas),
-   mouseConstraint = Matter.MouseConstraint.create(engine, { mouse: mouse,
-       constraint: { stiffness: 0.1, render: { visible: false }}});
-
-  var dragBody = null
-
-
-  Matter.Events.on(mouseConstraint, 'startdrag', function(event) {
-   dragBody = event.body;
-  });
-
-  Matter.World.add(engine.world, mouseConstraint);
 
 
 

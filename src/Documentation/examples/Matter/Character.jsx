@@ -12,13 +12,8 @@ class Scene extends React.Component {
     var Engine = Matter.Engine,
       Render = Matter.Render,
       World = Matter.World,
-      Body = Matter.Body,
       Bodies = Matter.Bodies,
-      Mouse = Matter.Mouse,
-      Events = Matter.Events,
-      Composite = Matter.Composite,
-      Composites = Matter.Composites,
-      MouseConstraint = Matter.MouseConstraint;
+      Events = Matter.Events;
 
     var engine = Engine.create({});
     engine.world.gravity.y = 0;
@@ -42,7 +37,6 @@ class Scene extends React.Component {
       // Bodies.rectangle(0, 300, 50, 600, { isStatic: false })
     ]);
 
-    var projectiles = []
     var targets = []
 
     var character = new matterCharacter(60, 250, 5, engine)
@@ -114,7 +108,6 @@ class Scene extends React.Component {
     // });
 
     Events.on(engine, 'afterUpdate', function(event) {
-        var time = engine.timing.timestamp;
         character.update(engine)
 
     });

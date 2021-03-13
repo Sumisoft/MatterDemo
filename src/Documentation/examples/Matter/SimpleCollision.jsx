@@ -13,11 +13,7 @@ class Scene extends React.Component {
       World = Matter.World,
       Body = Matter.Body,
       Bodies = Matter.Bodies,
-      Mouse = Matter.Mouse,
-      Events = Matter.Events,
-      Composite = Matter.Composite,
-      Composites = Matter.Composites,
-      MouseConstraint = Matter.MouseConstraint;
+      Events = Matter.Events;
 
     var engine = Engine.create({});
     engine.world.gravity.y = 0;
@@ -48,7 +44,6 @@ class Scene extends React.Component {
 
     console.log( rectA)
     Events.on(engine, 'afterUpdate', function(event) {
-          var time = engine.timing.timestamp;
           // console.log( time)
           Body.translate(ballB, {x:2, y: 0})
           // Body.translate(rectA.body, {x:0.2, y: 0})

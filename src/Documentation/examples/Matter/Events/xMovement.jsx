@@ -28,7 +28,9 @@ class Scene extends React.Component {
     var engine = matterComp.engine
 
 
-    var rectA = Bodies.rectangle(300, 200, 50, 50, { restitution: 0.5 });
+    var rectA = Bodies.rectangle(300, 200, 50, 50, {
+      restitution: 0.5,
+      inertia: Infinity, });
     World.add(engine.world, [rectA]);
 
     var counter = -1
@@ -59,14 +61,43 @@ class Scene extends React.Component {
 
     Matter.Events.on(mouseConstraint, "mousedown", function(event) {
       // console.log(event.source.body)
-      console.log('mouse down')
-      // dragBody = event.source.body;
-      position = event.source.body.position
+      dragBody = event.source.body;
+
+      // Matter.Body.setMass(dragBody, Infinity )
+      position = {...event.source.body.position,...{}}
+      // console.log( dragBody)
+      // console.log('mouse down', position)
       // dragBody.isStatic = false
     });
 
+    Events.on(engine, 'afterUpdate', function(event) {
+          var time = engine.timing.timestamp;
+          // console.log( time)
+          //
+          if( dragBody !== undefined ){
+            Matter.Body.setPosition(dragBody, {x:dragBody.position.x, y:position.y})
+            Matter.Body.setVelocity(dragBody, {x: 0, y: 0 })
+            // Matter.Body.setPosition(dragBody, [300, 200])
+            // Matter.Body.setVelocity(dragBody, {x: 0, y: 0 })
+            // Body.translate(dragBody, {x:0, y: -Math.abs(dragBody.position.y - position.y) })
+
+          }
+          // Body.translate(rectA.body, {x:0.2, y: 0})
+          // Composite.translate(rectA, {
+          //     x: Math.sin(time * 0.001 * 2,
+          //     y: 0
+          // });
+
+
+      });
+
     Matter.Events.on(mouseConstraint, "mouseup", function(event) {
       console.log('mouse up')
+
+      // Matter.Body.setPosition(dragBody, {x:100, y:200})
+      // Matter.Body.setPosition(dragBody, {x:dragBody.position.x, y:position.y})
+      // Matter.Body.setVelocity(dragBody, {x: 0, y: 0 })
+      dragBody = undefined
       //
       // dragBody.isStatic = false
       // Body.translate(dragBody, {
