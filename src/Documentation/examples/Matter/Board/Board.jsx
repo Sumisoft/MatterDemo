@@ -42,7 +42,7 @@ class BoardTest extends React.Component {
     })
 
     gameBoard.createBoard()
-    gameBoard.add(engine)
+    gameBoard.addToWorld(engine)
     console.log( gameBoard )
     // const cellHeight = CONSTANTS.height / CONSTANTS.cellsVerical
     // const cellWidth = CONSTANTS.width / CONSTANTS.cellsHorizontal

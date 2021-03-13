@@ -10,8 +10,10 @@ export class board{
     // default defintions
     this.board = []
     this.spacers = []
+    this.cells = []
+    this.padding = [0,0,0,0]
 
-    this.hSpacerWidth = 5
+    this.hSpacerWidth = 0
     this.hSpacerHeight = props.height
     this.vSpacerWidth = props.width
     this.vSpacerHeight = 0
@@ -21,6 +23,24 @@ export class board{
     if( keys.includes('height') ) this.height = props.height
     if( keys.includes('width') ) this.width = props.width
 
+    // populate the board parameters based on the provided constants
+    if( keys.includes('constants') ){
+      this.padding = [
+        props.constants.paddingTop,
+        props.constants.paddingLeft,
+        props.constants.paddingBottom,
+        props.constants.paddingRight,
+      ]
+
+      this.positions = [
+        props.constants.cellsH,
+        props.constants.cellsV,
+      ]
+
+      this.width = props.constants.width
+      this.height = props.constants.height
+    }
+
   }
 
   get positions(){ return this.boardPositions }
@@ -28,17 +48,16 @@ export class board{
 
   get height(){ return this.boardHeight }
   set height(value){
-    this.boardlHeight = value
-    this.spacerHeight = value
-    this.cellHeight = value/this.boardPositions[1]
+    this.boardlHeight = value - this.padding[0] - this.padding[2]
+    this.cellHeight = this.boardlHeight/this.boardPositions[1]
   }
 
-  get width(){ return this.boardlWidth }
+  get width(){ return this.boardWidth }
   set width(value){
-    this.boardlWidth = value
+    this.boardWidth = value - this.padding[1] - this.padding[3]
 
     const spacerBuffer = (this.boardPositions[0]+1) * this.hSpacerWidth
-    this.cellWidth = (value - spacerBuffer)/this.boardPositions[0]
+    this.cellWidth = (this.boardWidth - spacerBuffer)/this.boardPositions[0]
   }
 
   // creates a matrix containing cell objects
@@ -54,11 +73,12 @@ export class board{
       for( var y=0; y < this.boardPositions[1]; y++ ){
           const _cell = new cell({
             position: [x,y],
+            offset: [this.padding[0], this.padding[1]],
             width: this.cellWidth,
             height: this.cellHeight,
             hspacer: this.hSpacerWidth,
             vspacer: this.vSpacerHeight,
-            valid: Math.random() < 0.5
+            valid: true
           })
 
           row.push( _cell)
@@ -103,20 +123,38 @@ export class board{
   }
 
   // create a body for each cell and adds it to the work
-  add( engine ){
+  addToWorld( engine ){
     // .map(t => t.createBody())
-    const bodies = this.board
-      .map(r => r.filter(s=>s.valid === true).map(t => t.createBody()) )
+    this.cells = this.board
+      .map(r => r.filter(s=>s.valid === true))
       .reduce((pre, cur) => pre.concat(cur));
 
-    Matter.World.add(engine.world, bodies);
+    Matter.World.add(engine.world, this.cells.map(t => t.createBody()) )
 
     this.addVSpacers(engine)
 
   }
 
+  // returns the selected cell object
+  selectedCell( body ){
 
-  isSelected( position ){
+    // search for the selected cell
+    const selected = this.cells.filter(r => r.body === body)
+
+    // return an object containing cell information when it exist
+    if( selected.length > 0 ){
+      return {
+        valid: !selected[0].occupied,
+        cell: selected[0]
+      }
+    }
+
+    // default to invalid for all non-cells
+    return {valid: false}
+  }
+
+  // returns the cell object containing the Matter Body
+  getCell( body ){
 
   }
 }

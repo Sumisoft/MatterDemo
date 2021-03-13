@@ -59,12 +59,15 @@
         "path": "Matter/Characters/Chain"
     },
 
+
+
     {
         "category": "Game Board",
         "subcategory": "Game Board",
         "title": "Simple Grid",
         "description": "Simple layout made of static objects",
-        "path": "Matter/Board/Grid"
+        "path": "Matter/Board/Grid",
+        "indev": true
     },
     {
         "category": "Game Board",
@@ -78,9 +81,10 @@
         "subcategory": "Cell",
         "title": "Moveable cell",
         "description": "Limit the cell to y motion only",
-        "path": "Matter/Board/Cell",
-        "indev": true
+        "path": "Matter/Board/Cell"
     },
+
+
 
 
     {

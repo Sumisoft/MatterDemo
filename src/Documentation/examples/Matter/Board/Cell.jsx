@@ -56,7 +56,7 @@ class BoardTest extends React.Component {
       console.log( 'mousedown', event, event.which)
       if( addCharacter === false) cellObj.startMotion()
 
-      if( addCharacter ) cellObj.createCharacter ()
+      if( addCharacter ) cellObj.addCharacter ()
 
     });
 

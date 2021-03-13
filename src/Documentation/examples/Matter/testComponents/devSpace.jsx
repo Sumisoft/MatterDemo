@@ -14,7 +14,7 @@ export default function devSpace( ref ){
 
   const HEIGHT = 400
   const WIDTH = 600
-  
+
   var render = Render.create({
     element: ref,
     engine: engine,

@@ -1,7 +1,10 @@
 import React from "react";
 import Matter from "matter-js";
 
-import matterCharacter from '../../../../Game/components/matterCharacter'
+import matterCharacter from '../../../../Game/components/Characters/matterCharacter'
+import Constants from '../../../../Game/components/constants'
+import world from '../../../../Game/components/Boards/world'
+import board from '../../../../Game/components/Boards/board'
 
 const CONSTANTS = {
   height: 400,
@@ -26,44 +29,22 @@ class Scene extends React.Component {
       Events = Matter.Events,
       MouseConstraint = Matter.MouseConstraint;
 
-    var engine = Engine.create({});
-    engine.world.gravity.y = 0;
+
+    var constants = new Constants()
+
+    var worldParameter = world({
+      ref: this.refs.scene,
+      constants: constants
+    })
+
+    var engine = worldParameter.engine
+    var render = worldParameter.render
 
 
-    var render = Render.create({
-      element: this.refs.scene,
-      engine: engine,
-      options: {
-        width: CONSTANTS.width,
-        height: CONSTANTS.height,
-        wireframes: false
-      }
-    });
+    var gameBoard = new board({constants: constants})
+    gameBoard.createBoard()
+    gameBoard.addToWorld(engine)
 
-    const cellHeight = CONSTANTS.height / CONSTANTS.cellsVerical
-    const cellWidth = CONSTANTS.width / CONSTANTS.cellsHorizontal
-
-    var grid = []
-    for( var x=0; x < CONSTANTS.cellsHorizontal; x++ ){
-      for( var y=0; y< CONSTANTS.cellsVerical; y++ ){
-        grid.push(
-          Bodies.rectangle(
-            x*cellWidth + cellWidth/2,
-            y*cellHeight + cellHeight/2,
-            cellWidth,
-            cellHeight,
-            { isStatic: true,
-              collisionFilter: {
-                  category: 0x1000,
-                  mask: 0x1000
-              },
-             }
-          )
-        )
-      }
-    }
-
-    World.add(engine.world, grid);
 
     var targets = []
 
@@ -82,23 +63,32 @@ class Scene extends React.Component {
     World.add(engine.world, mouseConstraint);
 
     Matter.Events.on(mouseConstraint, "mousedown", function(event) {
-      var mouse = mouseConstraint.mouse,
-          constraint = mouseConstraint.constraint
 
-      if (mouse.button === 0) {
-        var t = new matterCharacter(
-          constraint.pointA.x,
-          constraint.pointA.y,
-          3,
-          1)
+      const cell = gameBoard.selectedCell( event.source.body )
 
-        t.setProjectiles(1, 2)
-        targets.push( t )
-
-        World.add(engine.world, t.body);
-
-
+      // when the cell is valid and unoccupied, add a character
+      if( cell.valid ){
+        console.log( 'adding character')
+        const char = cell.cell.addCharacter(1)
+        targets.push( char )
       }
+      // cell.addCharacter()
+      // var mouse = mouseConstraint.mouse,
+      //     constraint = mouseConstraint.constraint
+      //
+      // if (mouse.button === 0) {
+      //   var t = new matterCharacter(
+      //     constraint.pointA.x,
+      //     constraint.pointA.y,
+      //     3,
+      //     1)
+      //
+      //   t.setProjectiles(1, 2)
+      //
+      //   World.add(engine.world, t.body);
+      //
+      //
+      // }
     });
 
     Events.on(engine, 'afterUpdate', function(event) {

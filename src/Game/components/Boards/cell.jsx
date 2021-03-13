@@ -1,7 +1,7 @@
 
 
 import Matter from "matter-js";
-import matterCharacter from '../matterCharacter'
+import matterCharacter from '../Characters/matterCharacter'
 
 export class cell{
 
@@ -16,6 +16,7 @@ export class cell{
 
     const keys = Object.keys(props)
     if( keys.includes('position') ) this.position = props.position
+    if( keys.includes('offset') ) this.offset = props.offset
     if( keys.includes('height') ) this.height = props.height
     if( keys.includes('width') ) this.width = props.width
     if( keys.includes('valid') ) this.valid = props.valid
@@ -26,6 +27,9 @@ export class cell{
 
   get position(){ return this.cellPosition }
   set position(value){ this.cellPosition = value}
+
+  get offset(){ return this.cellOffset }
+  set offset(value){ this.cellOffset = value}
 
   get height(){ return this.cellHeight }
   set height(value){ this.cellHeight = value}
@@ -55,8 +59,8 @@ export class cell{
     const height = this.cellHeight + this.cellVspacer
 
     this.body = Matter.Bodies.rectangle(
-      this.cellPosition[0]*width + width/2,
-      this.cellPosition[1]*height + height/2,
+      this.cellPosition[0]*width + width/2 + this.cellOffset[0],
+      this.cellPosition[1]*height + height/2  + this.cellOffset[1],
       this.cellWidth,
       this.cellHeight,
       {
@@ -81,20 +85,7 @@ export class cell{
   }
 
   /// create a character that resides within the middle o fthe specified cell
-  createCharacter( position ){
-
-    // console.log( 'creating character', this.body.position )
-    // Matter.Composite.add(this.composite,
-    //   Matter.Bodies.circle(this.body.position.x, this.body.position.y, 5, {
-    //     collisionFilter: {
-    //         category: 0x0002,
-    //         mask: 0x0004
-    //     },
-    //   })
-    //  )
-    //
-    // Matter.Composites.chain(this.composite, 0, 0, 0, 0, { stiffness: 1, length: 0 });
-    // return
+  addCharacter( charType ){
 
     if( this.occupied === true ) return undefined
     if( this.valid === false ) return undefined
@@ -128,7 +119,7 @@ export class cell{
     return charObj
   }
 
-  isSelected( position ){
+  isSelected( body ){
 
   }
 
