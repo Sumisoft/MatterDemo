@@ -1,7 +1,7 @@
 import React from "react";
 import Matter from "matter-js";
 
-import matterObj from './components/matterObj'
+import matterObj from '../../../../Game/components/matterObj'
 class Scene extends React.Component {
   constructor(props) {
     super(props);

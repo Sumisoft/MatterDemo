@@ -1,9 +1,9 @@
 import React from "react";
 import Matter from "matter-js";
 
-import board from '../components/Boards/board'
+import board from '../../../../Game/components/Boards/board'
 
-import {CONSTANTS} from '../components/constants'
+import {CONSTANTS} from '../../../../Game/components/constants'
 
 class BoardTest extends React.Component {
   constructor(props) {

@@ -30,6 +30,7 @@ class Scene extends React.Component {
 
     var rectA = Bodies.rectangle(300, 200, 50, 50, {
       restitution: 0.5,
+      isStatic: true,
       inertia: Infinity, });
     World.add(engine.world, [rectA]);
 
@@ -59,11 +60,12 @@ class Scene extends React.Component {
 
     // World.setBounds(300, 300, 1800, 1800, 15);
 
+
     Matter.Events.on(mouseConstraint, "mousedown", function(event) {
       // console.log(event.source.body)
       dragBody = event.source.body;
 
-      // Matter.Body.setMass(dragBody, Infinity )
+      Matter.Body.setStatic(dragBody, false)
       position = {...event.source.body.position,...{}}
       // console.log( dragBody)
       // console.log('mouse down', position)
@@ -97,6 +99,8 @@ class Scene extends React.Component {
       // Matter.Body.setPosition(dragBody, {x:100, y:200})
       // Matter.Body.setPosition(dragBody, {x:dragBody.position.x, y:position.y})
       // Matter.Body.setVelocity(dragBody, {x: 0, y: 0 })
+      //
+      Matter.Body.setStatic(dragBody, true)
       dragBody = undefined
       //
       // dragBody.isStatic = false

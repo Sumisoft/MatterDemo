@@ -1,7 +1,7 @@
 import React from "react";
 import Matter from "matter-js";
 
-import matterCharacter from '../components/matterCharacter'
+import matterCharacter from '../../../../Game/components/matterCharacter'
 
 const CONSTANTS = {
   height: 400,

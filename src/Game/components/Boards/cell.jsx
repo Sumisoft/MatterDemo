@@ -11,6 +11,9 @@ export class cell{
     this.valid = true
     this.occupied = false
 
+    this.cellVspacer = 0
+    this.cellHspacer = 0
+
     const keys = Object.keys(props)
     if( keys.includes('position') ) this.position = props.position
     if( keys.includes('height') ) this.height = props.height
@@ -36,6 +39,12 @@ export class cell{
   get hspacer(){ return this.cellHspacer }
   set hspacer(value){ this.cellHspacer = value}
 
+  // creates teh cell body object and adds it to the world
+  addToWorld(engine){
+
+    Matter.World.add(engine.world, [this.createBody()]);
+  }
+
   // returns a static MatterJS body representing the cell
   createBody(){
 
@@ -44,13 +53,14 @@ export class cell{
 
     const width = this.cellWidth + this.cellHspacer
     const height = this.cellHeight + this.cellVspacer
-    return Matter.Bodies.rectangle(
+
+    this.body = Matter.Bodies.rectangle(
       this.cellPosition[0]*width + width/2,
       this.cellPosition[1]*height + height/2,
       this.cellWidth,
       this.cellHeight,
       {
-        // isStatic: true,
+        isStatic: true,
         inertia: Infinity,
         collisionFilter: {
             category: 0x0001,
@@ -63,32 +73,81 @@ export class cell{
         }
        }
     )
+
+    this.composite = Matter.Composite.create()
+    Matter.Composite.add(this.composite, this.body)
+
+    return this.composite
   }
 
   /// create a character that resides within the middle o fthe specified cell
   createCharacter( position ){
 
+    // console.log( 'creating character', this.body.position )
+    // Matter.Composite.add(this.composite,
+    //   Matter.Bodies.circle(this.body.position.x, this.body.position.y, 5, {
+    //     collisionFilter: {
+    //         category: 0x0002,
+    //         mask: 0x0004
+    //     },
+    //   })
+    //  )
+    //
+    // Matter.Composites.chain(this.composite, 0, 0, 0, 0, { stiffness: 1, length: 0 });
+    // return
+
     if( this.occupied === true ) return undefined
     if( this.valid === false ) return undefined
-
-    //TODO: Check the position of the click against the board cellPosition
-    if( (Math.floor(position.x / this.cellWidth) !== this.cellPosition[0]) |
-        (Math.floor(position.y / this.cellHeight) !== this.cellPosition[1]) ){
-      return undefined
-    }
-
-    const x = this.cellPosition[0] * this.cellWidth + (this.cellWidth/2)
-    const y = this.cellPosition[1] * this.cellHeight + (this.cellHeight/2)
+    //
+    // //TODO: Check the position of the click against the board cellPosition
+    // if( (Math.floor(position.x / this.cellWidth) !== this.cellPosition[0]) |
+    //     (Math.floor(position.y / this.cellHeight) !== this.cellPosition[1]) ){
+    //   return undefined
+    // }
+    //
+    // const x = this.cellPosition[0] * this.cellWidth + (this.cellWidth/2)
+    // const y = this.cellPosition[1] * this.cellHeight + (this.cellHeight/2)
+    const health = 3
+    const team = 1
 
     //TODO: Create a character in the middle of teh cell
-    var charObj = new matterCharacter(x, y, 3, 1)
+    var charObj = new matterCharacter(
+      this.body.position.x,
+      this.body.position.y,
+      health,
+      team
+    )
+
     charObj.setProjectiles(1, 2)
+
+    Matter.Composite.add(this.composite, charObj.body )
+    Matter.Composites.chain(this.composite, 0, 0, 0, 0, { stiffness: 1, length: 0 });
+
+    this.occupied = true
 
     return charObj
   }
 
   isSelected( position ){
 
+  }
+
+  // all the body to move and track the original position
+  startMotion(){
+    Matter.Body.setStatic(this.body, false)
+    this.position = {...this.body.position,...{}}
+  }
+
+  inMotion(){
+    if( this.body.isStatic === false ){
+      Matter.Body.setPosition(this.body, {x:this.position.x, y:this.body.position.y})
+      Matter.Body.setVelocity(this.body, {x: 0, y: 0 })
+    }
+  }
+
+  // stop the body motion by forcing the body to be static
+  stopMotion(){
+    Matter.Body.setStatic(this.body, true)
   }
 }
 

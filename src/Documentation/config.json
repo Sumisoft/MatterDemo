@@ -1,11 +1,5 @@
 [
-    {
-        "category": "Demo",
-        "subcategory": "First Example",
-        "title": "Very Basic example",
-        "description": "Description of my very basic example",
-        "path": "Demo/BasicExample"
-    },
+
     {
         "category": "Matter-js",
         "subcategory": "Examples",
@@ -14,61 +8,81 @@
         "path": "Matter/Simple"
     },
     {
-        "category": "Matter-js",
-        "subcategory": "Examples",
+        "category": "Events",
+        "subcategory": "Movement",
         "title": "Moving Object",
         "description": "Move object automatically across screen",
-        "path": "Matter/Movement"
+        "path": "Matter/Events/Movement"
     },
     {
-        "category": "Matter-js",
-        "subcategory": "Examples",
+        "category": "Events",
+        "subcategory": "Collisions",
         "title": "Simple Collision",
         "description": "Object moves and collides with another",
-        "path": "Matter/SimpleCollision"
+        "path": "Matter/Events/SimpleCollision"
     },
     {
-        "category": "Matter-js",
-        "subcategory": "Examples",
+        "category": "Events",
+        "subcategory": "Collisions",
         "title": "Object Collision",
         "description": "Wrap the matter component into a class to associate it with other attributes",
-        "path": "Matter/ObjectCollision"
+        "path": "Matter/Events/ObjectCollision"
     },
+
+
     {
-        "category": "Matter-js",
+        "category": "Characters",
         "subcategory": "Examples",
         "title": "Character Definition",
         "description": "Create a movable character with the ability to shoot projectiles",
-        "path": "Matter/Character"
+        "path": "Matter/Characters/Character"
     },
     {
-        "category": "Matter-js",
+        "category": "Characters",
         "subcategory": "Characters",
         "title": "DualingCharacters",
         "description": "Two characters dual against each other with projectiles",
-        "path": "Matter/DualingCharacters"
+        "path": "Matter/Characters/DualingCharacters"
     },
     {
-        "category": "Matter-js",
+        "category": "Characters",
         "subcategory": "Characters",
         "title": "Friendly Fire",
         "description": "Two characters on the same side shouldt be able to attack on another",
-        "path": "Matter/FriendlyFire"
+        "path": "Matter/Characters/FriendlyFire"
     },
     {
-        "category": "Matter-js",
+        "category": "Characters",
+        "subcategory": "Characters",
+        "title": "Dragon Template",
+        "description": "Enemies will be created out of chains",
+        "path": "Matter/Characters/Chain"
+    },
+
+    {
+        "category": "Game Board",
         "subcategory": "Game Board",
         "title": "Simple Grid",
         "description": "Simple layout made of static objects",
         "path": "Matter/Board/Grid"
     },
     {
-        "category": "Matter-js",
+        "category": "Game Board",
         "subcategory": "Game Board",
         "title": "Board Class",
         "description": "Game board made from a class",
         "path": "Matter/Board/Board"
     },
+    {
+        "category": "Game Board",
+        "subcategory": "Cell",
+        "title": "Moveable cell",
+        "description": "Limit the cell to y motion only",
+        "path": "Matter/Board/Cell",
+        "indev": true
+    },
+
+
     {
         "category": "Events",
         "subcategory": "Tunneling",
@@ -88,15 +102,7 @@
         "subcategory": "Movement",
         "title": "X Movement",
         "description": "Contrain the object movement to a single axis",
-        "path": "Matter/Events/xMovement",
-        "indev": true
-    },
-    {
-        "category": "Enemies",
-        "subcategory": "Chain",
-        "title": "Dragon Template",
-        "description": "Enemies will be created out of chains",
-        "path": "Matter/Enemies/Chain"
+        "path": "Matter/Events/xMovement"
     }
 
 ]
