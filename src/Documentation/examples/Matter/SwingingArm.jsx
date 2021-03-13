@@ -166,4 +166,4 @@ function Example(ref) {
              Matter.Runner.stop(runner);
          }
      };
- };
+ }
