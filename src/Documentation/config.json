@@ -74,8 +74,29 @@
         "subcategory": "Tunneling",
         "title": "Tunnel Prevention",
         "description": "Prvent objects from passing through walls",
-        "path": "Matter/Events/Tunneling",
+        "path": "Matter/Events/Tunneling"
+    },
+    {
+        "category": "Events",
+        "subcategory": "Bounds",
+        "title": "World Bounds",
+        "description": "Set bounds for the world to prevent objects from escaping",
+        "path": "Matter/Events/Bounds"
+    },
+    {
+        "category": "Events",
+        "subcategory": "Movement",
+        "title": "X Movement",
+        "description": "Contrain the object movement to a single axis",
+        "path": "Matter/Events/xMovement",
         "indev": true
+    },
+    {
+        "category": "Enemies",
+        "subcategory": "Chain",
+        "title": "Dragon Template",
+        "description": "Enemies will be created out of chains",
+        "path": "Matter/Enemies/Chain"
     }
 
 ]

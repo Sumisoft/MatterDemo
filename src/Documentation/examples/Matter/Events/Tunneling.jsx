@@ -42,8 +42,9 @@ class Scene extends React.Component {
     ]);
 
 
-    var rectA = Bodies.rectangle(310, 250, 30, 50, { restitution: 0.5 });
-    var ballB = Bodies.circle(200, 250, 50, { restitution: 0.5 });
+    var rectA = Bodies.rectangle(310, 250, 50, 50, { restitution: 0.5 });
+    var ballB = Bodies.rectangle(200, 200, 50, 50, { restitution: 0.5 });
+    // var ballB = Bodies.circle(200, 250, 50, { restitution: 0.5 });
     World.add(engine.world, [rectA, ballB]);
 
     // add mouse control
@@ -62,40 +63,80 @@ class Scene extends React.Component {
 
     var counter = -1
     var dragBody
+    var position
 
     Matter.Events.on(mouseConstraint, "mousedown", function(event) {
       // console.log(event.source.body)
+      console.log('mouse down')
       dragBody = event.source.body;
+      position = event.source.body.position
+      dragBody.isStatic = false
+    });
+
+    Matter.Events.on(mouseConstraint, "mouseup", function(event) {
+      console.log('mouse up')
+
+      dragBody.isStatic = false
+      Body.translate(dragBody, {
+           x: 20,
+           y: 0})
+       Matter.Body.setVelocity(dragBody, {x: 0, y: 0 })
+
     });
 
 
     Events.on(engine, 'collisionStart', function(event) {
-      console.log( 'this is the dragging body', dragBody)
-      var pairs = event.pairs;
-      if (dragBody != null) {
-         if (dragBody.velocity.x > 25.0) {
-             Matter.Body.setVelocity(dragBody, {x: 25, y: dragBody.velocity.y });
-         }
-         if (dragBody.velocity.y > 25.0) {
-             Matter.Body.setVelocity(dragBody, {x: dragBody.velocity.x, y: 25 });
-         }
-         if (dragBody.positionImpulse.x > 25.0) {
-             dragBody.positionImpulse.x = 25.0;
-         }
-         if (dragBody.positionImpulse.y > 25.0) {
-             dragBody.positionImpulse.y = 25.0;
-         }
-     }
+      console.log( 'this is the dragging body', dragBody.position)
+     //  var pairs = event.pairs;
+     //  console.log( pairs)
+     //  if (dragBody != null) {
+     //     if (dragBody.velocity.x > 25.0) {
+     //         Matter.Body.setVelocity(dragBody, {x: 25, y: dragBody.velocity.y });
+     //     }
+     //     if (dragBody.velocity.y > 25.0) {
+     //         Matter.Body.setVelocity(dragBody, {x: dragBody.velocity.x, y: 25 });
+     //     }
+     //     if (dragBody.positionImpulse.x > 25.0) {
+     //         dragBody.positionImpulse.x = 25.0;
+     //     }
+     //     if (dragBody.positionImpulse.y > 25.0) {
+     //         dragBody.positionImpulse.y = 25.0;
+     //     }
+     // }
+     //
+     //  pairs.forEach(({ bodyA, bodyB }) => {
+     //    console.log( bodyA.position, bodyB.position)
+     //
+     //    Body.translate(bodyB, {
+     //      x: Math.abs(bodyB.position.x - bodyA.position.x),
+     //      y: bodyB.position.x})
+     // });
+     //
+     // Matter.Body.setVelocity(dragBody, {x: 0, y: 0 })
+     // dragBody.isStatic = true
 
-      pairs.forEach(({ bodyA, bodyB }) => {
-        console.log( bodyB)
-
-        Body.translate(bodyB, {x:0, y: 0})
-     });
     })
 
     Events.on(engine, 'collisionActive', function(event) {
-      console.log( 'collision active', dragBody)
+      Body.translate(dragBody, {
+           x: 20,
+           y: 0})
+       Matter.Body.setVelocity(dragBody, {x: 0, y: 0 })
+      // console.log( 'collision active', dragBody.velocity)
+      //
+      // Body.translate(dragBody, {x:0, y: 0})
+      // if (dragBody.velocity.x > 5.0) {
+      //     Matter.Body.setVelocity(dragBody, {x: 5, y: dragBody.velocity.y });
+      // }
+      // if (dragBody.velocity.y > 5.0) {
+      //     Matter.Body.setVelocity(dragBody, {x: dragBody.velocity.x, y: 5 });
+      // }
+      // if (dragBody.positionImpulse.x > 5.0) {
+      //     dragBody.positionImpulse.x = 5.0;
+      // }
+      // if (dragBody.positionImpulse.y > 5.0) {
+      //     dragBody.positionImpulse.y = 5.0;
+      // }
 
     })
 
