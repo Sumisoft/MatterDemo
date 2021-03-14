@@ -39,10 +39,11 @@
     },
     {
         "category": "Characters",
-        "subcategory": "Characters",
+        "subcategory": "Dualing Characters",
         "title": "DualingCharacters",
         "description": "Two characters dual against each other with projectiles",
-        "path": "Matter/Characters/DualingCharacters"
+        "path": "Matter/Characters/DualingCharacters",
+        "indev": true
     },
     {
         "category": "Characters",
@@ -58,6 +59,13 @@
         "description": "Enemies will be created out of chains",
         "path": "Matter/Characters/Chain"
     },
+    {
+        "category": "Characters",
+        "subcategory": "Pallet",
+        "title": "Character Pallet",
+        "description": "Render all game characters",
+        "path": "Matter/Characters/Pallet"
+    },
 
 
 
@@ -66,8 +74,7 @@
         "subcategory": "Game Board",
         "title": "Simple Grid",
         "description": "Simple layout made of static objects",
-        "path": "Matter/Board/Grid",
-        "indev": true
+        "path": "Matter/Board/Grid"
     },
     {
         "category": "Game Board",

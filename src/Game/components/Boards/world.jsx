@@ -17,7 +17,6 @@ export default function world( props ){
   const HEIGHT = props.constants.height
   const WIDTH = props.constants.width
 
-  console.log( 'props', props.constants )
   var render = Render.create({
     element: props.ref,
     engine: engine,

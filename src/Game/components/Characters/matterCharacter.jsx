@@ -1,32 +1,60 @@
 import Matter from "matter-js";
 
 import matterObj from './matterObj'
-
-const CHAR_WIDTH = 30
-const CHAR_HEIGHT = 50
+import projectile from './projectile'
 
 class matterCharacter extends matterObj{
 
-  constructor( x, y, health, category){
-    super(health)
+  constructor( props ){
+    super(props.health)
     this.createdOn = undefined
     this.updatedOn = undefined
-    this.category = category
 
-    this.projectiles = []
+    this.charHeight = 50
+    this.charWidth = 30
+
+    this.projectileArray = []
 
     this.movement = {
       speed: 0,
     }
 
-    this.projectile = {
-      rate: 0,
-      speed: 0,
-      maxDistance: 0
-    }
+    this.x = props.x
+    this.y = props.y
 
-    this.addBody( x, y )
+    this.level = 1
+    this.type = 1
+
+    const keys = Object.keys(props)
+    if( keys.includes('height') ) this.height = props.height
+    if( keys.includes('width') ) this.width = props.width
+    if( keys.includes('category') ) this.category = props.category
+    if( keys.includes('level') ) this.level = props.level
+    if( keys.includes('type') ) this.type = props.type
+
+
+    // this.addBody( props.x, props.y )
+    //
+    this.projectile = new projectile({
+      type: this.type,
+      level: this.level,
+    })
   }
+
+  get height(){ return this.charHeight }
+  set height(value){ this.charHeight = value}
+
+  get width(){ return this.charWidth }
+  set width(value){ this.charWidth = value/2}
+
+  get category(){ return this.charCategory }
+  set category(value){ this.charCategory = value}
+
+  get level(){ return this.charLevel }
+  set level(value){ this.charLevel = value}
+
+  get type(){ return this.charType }
+  set type(value){ this.charType = value}
 
   setMovement( speed ){
     this.movement.speed = speed
@@ -36,83 +64,31 @@ class matterCharacter extends matterObj{
     this.body.restitution = 0.9;
   }
 
-  setProjectiles( rate, speed, maxDistance=undefined ){
-    this.projectile = {
-      rate: rate,
-      speed: speed,
-      maxDistance: maxDistance
-    }
-  }
-
-  getParams( category ){
-    const style = {
-      0: {
-        id: 0x0002,
-        category: 0x0002,
-        mask: 0x0004,
-        color: '#f55a3c'
-      },
-      1: {
-        id: 0x0004,
-        category: 0x0004,
-        mask: 0x0002,
-        color: '#063e7b'
-      },
-    }
-
-    return {
-      collisionFilter: {
-          category: style[category].category,
-          mask: style[category].mask
-      },
-      render: {
-          strokeStyle: style[category].color,
-          fillStyle: 'transparent',
-          lineWidth: 2
-      }
-    }
-  }
-
   addBody( x, y ){
-
-    const params = this.getParams(this.category)
-    this.rectangle( x, y, CHAR_WIDTH, CHAR_HEIGHT, params )
+    const params = this.getParams(this.charCategory)
+    this.rectangle( x, y, this.charHeight, this.charHeight, params )
   }
 
-  /// create a projectile object, add it to the world and
-  /// store it into a buffer for future use
-  addProjectile(engine){
 
-    var projObj = new matterObj(1)
-
-    var x = this.body.position.x + CHAR_WIDTH
-    if( this.projectile.speed < 0 ) x = this.body.position.x - CHAR_WIDTH
-
-    const y = this.body.position.y
-    const params = this.getParams(this.category)
-
-    projObj.circle(x, y, 10, params)
-
-    projObj.setVelocity(this.projectile.speed, 0)
-
-    this.projectiles.push(projObj)
-
-    Matter.World.add(engine.world, projObj.body);
-  }
 
   // update the world periodically
-  update( engine ){
-    const timestamp = engine.timing.timestamp
-    if( this.updatedOn === undefined ) this.updatedOn = engine.timing.timestamp
+  refresh( props ){
+    const timestamp = props.engine.timing.timestamp
+    if( this.updatedOn === undefined ) this.updatedOn = props.engine.timing.timestamp
 
     const lastUpdated = Math.floor((timestamp - this.updatedOn)/1000)
 
-    if( this.projectile.rate > 0 ){
-      if( lastUpdated > this.projectile.rate ){
-        this.addProjectile(engine)
-        this.updatedOn = timestamp
-      }
+    if( lastUpdated > this.projectile.rate ){
+      this.projectile.add(this, props.engine)
+      this.updatedOn = timestamp
     }
+
+    if( lastUpdated > 1 ){
+      this.garbageCollection(props)
+      this.updatedOn = timestamp
+    }
+
+
   }
 
   //
@@ -121,20 +97,20 @@ class matterCharacter extends matterObj{
     var index
     var projFlag = false
 
-    const projArray = this.projectiles.map(r => r.body)
+    const projArray = this.projectileArray.map(r => r.body)
 
     index = projArray.indexOf(bodyA)
     if( index >= 0){
-      if( this.projectiles[index].collision(engine) ){
-        delete this.projectiles[index]
+      if( this.projectileArray[index].collision(engine) ){
+        delete this.projectileArray[index]
       }
       projFlag = true
     }
 
     index = projArray.indexOf(bodyB)
     if( index >= 0){
-      if( this.projectiles[index].collision(engine) ){
-        delete this.projectiles[index]
+      if( this.projectileArray[index].collision(engine) ){
+        delete this.projectileArray[index]
       }
       projFlag = true
     }
@@ -151,6 +127,11 @@ class matterCharacter extends matterObj{
     return false
   }
 
+  // removes objects (such as projectileArray) that are offscreen
+  garbageCollection( props ){
+    //TODO: Add character garbage collection
+    this.projectile.garbageCollection(props)
+  }
 }
 
 

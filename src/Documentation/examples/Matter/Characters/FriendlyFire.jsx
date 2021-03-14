@@ -41,13 +41,13 @@ class Scene extends React.Component {
     var targets = []
 
     var character = new matterCharacter(400, 250, 5, 1)
-    character.setProjectiles(1, -2)
+    // character.setProjectiles(1, -2)
     targets.push( character )
 
 
     for( var i=0; i < 2; i++ ){
       var t = new matterCharacter(110 + 60*i, 250, 3, 0)
-      t.setProjectiles(2, 2)
+      // t.setProjectiles(2, 2)
       targets.push( t )
     }
 

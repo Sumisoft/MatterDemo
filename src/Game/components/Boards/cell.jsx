@@ -1,7 +1,7 @@
 
 
 import Matter from "matter-js";
-import matterCharacter from '../Characters/matterCharacter'
+import characters from '../Characters/characters'
 
 export class cell{
 
@@ -102,21 +102,24 @@ export class cell{
     const team = 1
 
     //TODO: Create a character in the middle of teh cell
-    var charObj = new matterCharacter(
-      this.body.position.x,
-      this.body.position.y,
-      health,
-      team
-    )
+    this.character = new characters({
+      x: this.body.position.x,
+      y: this.body.position.y,
+      health: health,
+      category: team,
+      type: charType,
+      height: this.cellHeight,
+      width: this.cellWidth,
+    })
 
-    charObj.setProjectiles(1, 2)
+    this.character.add()
 
-    Matter.Composite.add(this.composite, charObj.body )
+    Matter.Composite.add(this.composite, this.character.body )
     Matter.Composites.chain(this.composite, 0, 0, 0, 0, { stiffness: 1, length: 0 });
 
     this.occupied = true
 
-    return charObj
+    return this.character
   }
 
   isSelected( body ){

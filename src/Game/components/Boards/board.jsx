@@ -12,6 +12,7 @@ export class board{
     this.spacers = []
     this.cells = []
     this.padding = [0,0,0,0]
+    this.constants = {}
 
     this.hSpacerWidth = 0
     this.hSpacerHeight = props.height
@@ -24,22 +25,7 @@ export class board{
     if( keys.includes('width') ) this.width = props.width
 
     // populate the board parameters based on the provided constants
-    if( keys.includes('constants') ){
-      this.padding = [
-        props.constants.paddingTop,
-        props.constants.paddingLeft,
-        props.constants.paddingBottom,
-        props.constants.paddingRight,
-      ]
-
-      this.positions = [
-        props.constants.cellsH,
-        props.constants.cellsV,
-      ]
-
-      this.width = props.constants.width
-      this.height = props.constants.height
-    }
+    if( keys.includes('constants') ) this.constants = props.constants
 
   }
 
@@ -48,8 +34,8 @@ export class board{
 
   get height(){ return this.boardHeight }
   set height(value){
-    this.boardlHeight = value - this.padding[0] - this.padding[2]
-    this.cellHeight = this.boardlHeight/this.boardPositions[1]
+    this.boardHeight = value - this.padding[0] - this.padding[2]
+    this.cellHeight = this.boardHeight/this.boardPositions[1]
   }
 
   get width(){ return this.boardWidth }
@@ -59,6 +45,26 @@ export class board{
     const spacerBuffer = (this.boardPositions[0]+1) * this.hSpacerWidth
     this.cellWidth = (this.boardWidth - spacerBuffer)/this.boardPositions[0]
   }
+
+
+  set constants( value ){
+
+    this.padding = [
+      value.paddingTop,
+      value.paddingLeft,
+      value.paddingBottom,
+      value.paddingRight,
+    ]
+
+    this.positions = [
+      value.cellsH,
+      value.cellsV,
+    ]
+
+    this.width = value.width
+    this.height = value.height
+  }
+
 
   // creates a matrix containing cell objects
   createBoard(){
@@ -153,10 +159,26 @@ export class board{
     return {valid: false}
   }
 
-  // returns the cell object containing the Matter Body
-  getCell( body ){
+  // refreshs the cell content. This is responsible for updating
+  // the projectiles and performing garbage collection
+  refresh( engine ){
+
+    const props = {
+      engine: engine,
+      boardWidth: this.boardWidth,
+      boardHeight: this.boardHeight,
+    }
+
+    this.cells
+      .filter(r => r.occupied === true) //select only occupied cells
+      .forEach( r => r.character.refresh(props) ) // garbage collect each cell
+    // console.log( this.cells)
 
   }
+
+
+
+
 }
 
 

@@ -6,8 +6,15 @@ import Constants from '../../../../Game/components/constants'
 import world from '../../../../Game/components/Boards/world'
 import board from '../../../../Game/components/Boards/board'
 
+const CONSTANTS = {
+  height: 400,
+  width: 800,
+  cellsVerical: 10,
+  cellsHorizontal: 8
 
-class Scene extends React.Component {
+}
+
+export default class CharacterPallet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -24,6 +31,8 @@ class Scene extends React.Component {
 
 
     var constants = new Constants()
+    constants.height = 600
+    constants.width = 600
 
     var worldParameter = world({
       ref: this.refs.scene,
@@ -38,50 +47,13 @@ class Scene extends React.Component {
     gameBoard.createBoard()
     gameBoard.addToWorld(engine)
 
-
+    gameBoard.board[0][0].addCharacter(1)
+    gameBoard.board[0][1].addCharacter(2)
+    gameBoard.board[0][3].addCharacter(3)
+    // gameBoard.board[0][3].addCharacter(4)
     var targets = []
 
-    // add mouse control
-    var mouse = Mouse.create(render.canvas),
-      mouseConstraint = MouseConstraint.create(engine, {
-        mouse: mouse,
-        constraint: {
-          stiffness: 0.2,
-          render: {
-            visible: false
-          }
-        }
-      });
 
-    World.add(engine.world, mouseConstraint);
-
-    Matter.Events.on(mouseConstraint, "mousedown", function(event) {
-
-      const cell = gameBoard.selectedCell( event.source.body )
-
-      // when the cell is valid and unoccupied, add a character
-      if( cell.valid ){
-        const char = cell.cell.addCharacter(1)
-        targets.push( char )
-      }
-      // cell.addCharacter()
-      // var mouse = mouseConstraint.mouse,
-      //     constraint = mouseConstraint.constraint
-      //
-      // if (mouse.button === 0) {
-      //   var t = new matterCharacter(
-      //     constraint.pointA.x,
-      //     constraint.pointA.y,
-      //     3,
-      //     1)
-      //
-      //   t.setProjectiles(1, 2)
-      //
-      //   World.add(engine.world, t.body);
-      //
-      //
-      // }
-    });
 
     Events.on(engine, 'afterUpdate', function(event) {
       gameBoard.refresh(engine)
@@ -96,4 +68,3 @@ class Scene extends React.Component {
      return <div ref="scene" />;
    }
  }
- export default Scene;
