@@ -4,22 +4,22 @@ import Matter from "matter-js";
 import matterCharacter from './matterCharacter'
 import projectile from './projectile'
 
-class characters extends matterCharacter{
+class enemy extends matterCharacter{
 
   constructor(props){
     super(props)
-    this.type = props.type
-    this.charCategory = 0
+    this.charCategory = 1 // define all eneies into category 1
+    this.props = props
   }
 
 
 
-  ninja( props ){
+  dragon( props ){
 
     var params = this.getParams(this.charCategory)
 
     // replace the color with sprites
-    params.render.strokeStyle = 'yellow'
+    params.render.strokeStyle = 'red'
 
     // define character's body. parametres defined in matterCharacter.jsx
     this.rectangle(
@@ -30,9 +30,22 @@ class characters extends matterCharacter{
       params
     )
 
+    const xVelocity = this.props.level/10
+    this.setVelocity(-xVelocity, 0 )
+    this.setFriction()
+
+    return this.body
+  }
+
+
+  dragonWithFire( props ){
+
+    this.dragon(props)
+
     this.projectile = new projectile({
       type: this.type,
       level: this.level,
+      charCategory: this.charCategory,
     })
 
     return this.body
@@ -40,32 +53,24 @@ class characters extends matterCharacter{
 
 
 
-  column( x, y, r, params={} ){
-    this.body = Matter.Bodies.circle(x, y, r, params);
-  }
-
-  friction(){
-    this.body.friction = 0.05;
-    this.body.frictionAir = 0.0005;
-    this.body.restitution = 0.9;
-  }
-
-  setVelocity( x, y ){
-    Matter.Body.setVelocity( this.body, {x: x, y: y})
-  }
 
   /// create a projectile object, add it to the world and
   /// store it into a buffer for future use
   add(props){
 
     var charObj
-    switch( this.type ){
+    switch( this.props.charType ){
       case 1 :
-        charObj = this.ninja(props)
+        charObj = this.dragon(props)
         break
 
+      case 2 :
+        charObj = this.dragonWithFire(props)
+        break
+
+
       default :
-        charObj = this.ninja(props)
+        charObj = this.dragon(props)
         break
     }
 
@@ -76,4 +81,4 @@ class characters extends matterCharacter{
 
 }
 
-export default characters
+export default enemy

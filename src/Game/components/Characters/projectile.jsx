@@ -11,10 +11,12 @@ class projectile extends matterObj{
     this.level = props.level
     this.type = props.type
 
-    this.speed = 2 + props.level/10
     this.rate = 1 + props.level/10
     this.maxDistance = Infinity
 
+    this.speed = 2 + props.level/10
+    if(props.charCategory === 1) this.speed = -1 * this.speed //invert the direction for enemies
+    
     this.projectiles = []
   }
 

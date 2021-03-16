@@ -59,8 +59,8 @@ export class cell{
     const height = this.cellHeight + this.cellVspacer
 
     this.body = Matter.Bodies.rectangle(
-      this.cellPosition[0]*width + width/2 + this.cellOffset[0],
-      this.cellPosition[1]*height + height/2  + this.cellOffset[1],
+      this.cellPosition[0]*width + width/2 + this.cellOffset[1],
+      this.cellPosition[1]*height + height/2  + this.cellOffset[0],
       this.cellWidth,
       this.cellHeight,
       {
@@ -89,15 +89,7 @@ export class cell{
 
     if( this.occupied === true ) return undefined
     if( this.valid === false ) return undefined
-    //
-    // //TODO: Check the position of the click against the board cellPosition
-    // if( (Math.floor(position.x / this.cellWidth) !== this.cellPosition[0]) |
-    //     (Math.floor(position.y / this.cellHeight) !== this.cellPosition[1]) ){
-    //   return undefined
-    // }
-    //
-    // const x = this.cellPosition[0] * this.cellWidth + (this.cellWidth/2)
-    // const y = this.cellPosition[1] * this.cellHeight + (this.cellHeight/2)
+
     const health = 3
     const team = 1
 

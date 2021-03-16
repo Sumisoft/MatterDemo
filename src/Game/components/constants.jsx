@@ -29,6 +29,8 @@ export default class Constants{
     this.paddingLeft = 20
     this.paddingBottom = 5
     this.paddingRight = 50
+
+    this.level = 1
   }
 
   get height(){ return this.worldHeight }
@@ -49,6 +51,8 @@ export default class Constants{
   get charHeight(){ return this.characterHeight }
   set charHeight(val){ this.characterHeight = val}
 
+  get level(){ return this.enemyLevel }
+  set level(val){ this.enemyLevel = val}
 
 
 }

@@ -19,6 +19,7 @@ class matterCharacter extends matterObj{
       speed: 0,
     }
 
+    console.log( 'what are the props', props)
     this.x = props.x
     this.y = props.y
 

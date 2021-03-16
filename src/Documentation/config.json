@@ -42,7 +42,14 @@
         "subcategory": "Dualing Characters",
         "title": "DualingCharacters",
         "description": "Two characters dual against each other with projectiles",
-        "path": "Matter/Characters/DualingCharacters",
+        "path": "Matter/Characters/DualingCharacters"
+    },
+    {
+        "category": "Characters",
+        "subcategory": "Enemies",
+        "title": "Enemies",
+        "description": "Enemy class is used to add enemies to the grid",
+        "path": "Matter/Characters/Enemies",
         "indev": true
     },
     {
