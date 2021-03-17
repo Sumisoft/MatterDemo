@@ -49,8 +49,7 @@
         "subcategory": "Enemies",
         "title": "Enemies",
         "description": "Enemy class is used to add enemies to the grid",
-        "path": "Matter/Characters/Enemies",
-        "indev": true
+        "path": "Matter/Characters/Enemies"
     },
     {
         "category": "Characters",
@@ -121,6 +120,14 @@
         "title": "X Movement",
         "description": "Contrain the object movement to a single axis",
         "path": "Matter/Events/xMovement"
+    },
+    {
+        "category": "Events",
+        "subcategory": "Matter Ext",
+        "title": "Body Extension",
+        "description": "Extend the body object to try and add attributes into the object",
+        "path": "Matter/Events/Extension",
+        "indev": true
     }
 
 ]
