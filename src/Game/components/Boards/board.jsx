@@ -159,6 +159,15 @@ export class board{
     return {valid: false}
   }
 
+
+  addHero(props){
+    this.board[props.col][props.row].addHero(
+      props.heroType,
+      props.level,
+      props.engine)
+  }
+
+
   // refreshs the cell content. This is responsible for updating
   // the projectiles and performing garbage collection
   refresh( engine ){
@@ -171,7 +180,7 @@ export class board{
 
     this.cells
       .filter(r => r.occupied === true) //select only occupied cells
-      .forEach( r => r.character.refresh(props) ) // garbage collect each cell
+      .forEach( r => r.hero.refresh(props) ) // garbage collect each cell
     // console.log( this.cells)
 
   }

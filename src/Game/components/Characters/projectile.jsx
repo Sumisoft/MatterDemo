@@ -3,52 +3,71 @@ import Matter from "matter-js";
 
 import matterObj from './matterObj'
 
-class projectile extends matterObj{
+class projectile{
 
   constructor(props){
-    super()
-    this.health = 1
-    this.level = props.level
-    this.type = props.type
-
-    this.rate = 1 + props.level/10
-    this.maxDistance = Infinity
-
-    this.speed = 2 + props.level/10
-    if(props.charCategory === 1) this.speed = -1 * this.speed //invert the direction for enemies
-    
     this.projectiles = []
   }
 
   // returns the starting position for the standard projectile
   startingPosition( charObj ){
-    var x = charObj.body.position.x + charObj.charWidth
-    if( this.speed < 0 ) x = charObj.body.position.x - charObj.charWidth
+    var x = charObj.bodyObj.position.x + charObj.bodyObj.width
+
+    // invert the starting point to the left side when the
+    // character belongs to the enemy group
+    if( charObj.group === 1 ){
+      x = charObj.bodyObj.position.x - charObj.bodyObj.width
+    }
 
     return {
       x: x,
-      y: charObj.body.position.y,
-      r: charObj.charWidth/4
+      y: charObj.bodyObj.position.y,
+      r: charObj.bodyObj.width/4
     }
   }
+
+  // sets the projectile speed based on the character object parameters
+  parameters( charObj ){
+
+    var speed = 2 + charObj.bodyObj.level/10
+
+    //invert the direction for enemies
+    if(charObj.bodyObj.group === 1) speed = -1 * this.speed
+
+    return {
+      health: charObj.bodyObj.level/10,
+      maxDistance: Infinity,
+      speed: speed
+    }
+  }
+
 
   single( charObj ){
 
     const position = this.startingPosition( charObj )
+    const parameters = this.parameters(charObj)
 
-    var params = this.getParams(charObj.charCategory)
+    var projObj = new matterObj({group: charObj.group})
 
-    // replace with sprites
-    params.render.strokeStyle = 'yellow'
+    console.log( {
+      health: parameters.health,
+      objType: 'projectile',
+      level: charObj.bodyObj.level,
+    })
 
-    var projObj = new matterObj( this.health )
-    projObj.circle(position.x, position.y, position.r, params)
-    projObj.setVelocity(this.speed, 0)
-    projObj.setFriction()
+    console.log( position, parameters)
+    // projObj.setParameters({
+    //   health: parameters.health,
+    //   objType: 'projectile',
+    //   level: charObj.bodyObj.level,
+    // })
+
+    projObj.projectile(position.x, position.y, position.r)
+    projObj.setVelocity(parameters.speed, 0)
 
     this.projectiles.push(projObj)
 
-    return [projObj.body]
+    return [projObj.bodyObj]
   }
 
   multiple( count, charObj ){
@@ -66,7 +85,7 @@ class projectile extends matterObj{
       var projObj = new matterObj( this.health )
 
       projObj.circle(
-        position.x + (charObj.charWidth)*i,
+        position.x + (charObj.body.width)*i,
         position.y,
         position.r,
         params);
@@ -118,32 +137,25 @@ class projectile extends matterObj{
     this.body = Matter.Bodies.circle(x, y, r, params);
   }
 
-  friction( body ){
-    body.friction = 0.05;
-    body.frictionAir = 0.0005;
-    body.restitution = 0.9;
-  }
-
-  setVelocity( body, x, y ){
-    Matter.Body.setVelocity( body, {x: x, y: y})
-  }
-
   /// create a projectile object, add it to the world and
   /// store it into a buffer for future use
   add(charObj, engine){
 
 
     var projObjects
-    switch( this.type ){
+    switch( charObj.projectileType ){
+
+      case 'single':
       case 1 :
         projObjects = this.single(charObj)
         break
 
+      case 'multiple':
       case 2 :
         projObjects = this.multiple(2, charObj)
         break
 
-
+      case 'spread':
       case 3 :
         projObjects = this.spread(4, charObj)
         break
@@ -159,45 +171,17 @@ class projectile extends matterObj{
     return projObjects
   }
 
-  collision(props){
-
-    var index
-    var projFlag = false
-
-    const projArray = this.projectileArray.map(r => r.body)
-
-    index = this.projectiles.indexOf(props.bodyA)
-    if( index >= 0){
-      if( this.projectiles[index].collision(props.engine) ){
-        delete this.projectiles[index]
-      }
-      projFlag = true
-    }
-
-    index = this.projectiles.indexOf(props.bodyB)
-    if( index >= 0){
-      if( this.projectiles[index].collision(props.engine) ){
-        delete this.projectiles[index]
-      }
-      projFlag = true
-    }
-
-    return projFlag
-
-  }
-
-
-  // removes objects (such as projectileArray) that are offscreen
+  // removes offscreen objects
   garbageCollection( props ){
 
     const padding = 200
     this.projectiles.forEach( (r, idx) => {
-      if( (r.body.position.x > props.boardWidth - padding) |
-          (r.body.position.x < -padding ) |
-          (r.body.position.y > props.boardHeight - padding) |
-          (r.body.position.y < -padding) ){
+      if( (r.bodyObj.position.x > props.boardWidth - padding) |
+          (r.bodyObj.position.x < -padding ) |
+          (r.bodyObj.position.y > props.boardHeight - padding) |
+          (r.bodyObj.position.y < -padding) ){
 
-          Matter.World.remove(props.engine.world, r.body);
+          Matter.World.remove(props.engine.world, r.bodyObj);
           delete this.projectiles[idx]
 
         }
@@ -207,9 +191,9 @@ class projectile extends matterObj{
 
     })
 
-    // this.projectileArray = this.projectileArray.filter(r => r !== null)
-
   }
+
+
 
 }
 

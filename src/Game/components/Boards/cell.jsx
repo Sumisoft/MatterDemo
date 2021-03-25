@@ -1,7 +1,8 @@
 
 
 import Matter from "matter-js";
-import characters from '../Characters/characters'
+
+import heros from '../Characters/heros'
 
 export class cell{
 
@@ -85,7 +86,7 @@ export class cell{
   }
 
   /// create a character that resides within the middle o fthe specified cell
-  addCharacter( charType ){
+  addHero( type, level, engine ){
 
     if( this.occupied === true ) return undefined
     if( this.valid === false ) return undefined
@@ -94,24 +95,23 @@ export class cell{
     const team = 1
 
     //TODO: Create a character in the middle of teh cell
-    this.character = new characters({
+    this.hero = new heros()
+    this.hero.add({
       x: this.body.position.x,
       y: this.body.position.y,
-      health: health,
-      category: team,
-      type: charType,
+      width: this.cellWidth/2,
       height: this.cellHeight,
-      width: this.cellWidth,
+      type: type,
+      level: level,
+      engine: engine,
     })
 
-    this.character.add()
-
-    Matter.Composite.add(this.composite, this.character.body )
+    Matter.Composite.add(this.composite, this.hero.character )
     Matter.Composites.chain(this.composite, 0, 0, 0, 0, { stiffness: 1, length: 0 });
 
     this.occupied = true
 
-    return this.character
+    return this.hero
   }
 
   isSelected( body ){

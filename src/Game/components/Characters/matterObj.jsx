@@ -8,36 +8,25 @@ class matterObj{
   constructor( props ){
     this.bodyObj = undefined
 
-    this.health = props.health
     this.group = props.group
-    this.type = props.type
   }
-
-
-  get health(){ return this._health }
-  set health(value){ this._health = value}
-
-  get type(){ return this._type }
-  set type(value){ this._type = value}
 
   // push key attributes into the body object
-  setParameters(){
-    Matter.Body.Set(this.bodyObj, 'health', this.value )
-    Matter.Body.Set(this.bodyObj, 'group', this.group )
-    Matter.Body.Set(this.bodyObj, 'type', this.type )
+  setParameters( props ){
+    Matter.Body.set(this.bodyObj, 'group', this.group )
+    Matter.Body.set(this.bodyObj, 'health', props.health )
+    Matter.Body.set(this.bodyObj, 'level', props.level )
+    Matter.Body.set(this.bodyObj, 'objType', props.objType )
   }
 
-  character( x, y, h, w, params={} ){
+  character( x, y, h, w){
     const params = this.getParams(this.group)
     this.bodyObj = Matter.Bodies.rectangle(x, y, h, w, params);
-    this.setParameters()
   }
 
-  projectile(x, y, r, params={}){
+  projectile(x, y, r){
     const params = this.getParams(this.group)
     this.bodyObj = Matter.Bodies.circle(x, y, r, params);
-    this.setParameters()
-    this.setFriction()
   }
 
   setFriction(){
@@ -48,6 +37,10 @@ class matterObj{
 
   setVelocity( x, y ){
     Matter.Body.setVelocity( this.bodyObj, {x: x, y: y})
+  }
+
+  toWorld( engine ){
+    Matter.World.add(engine.world, [this.bodyObj]);
   }
 
 

@@ -31,8 +31,7 @@ class heros extends matterObj{
       props.x,
       props.y,
       props.charWidth,
-      props.charHeight,
-      params
+      props.charHeight
     )
 
     return this.body
@@ -60,4 +59,4 @@ class heros extends matterObj{
 
 }
 
-export default characters
+export default heros

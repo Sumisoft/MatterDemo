@@ -1,11 +1,11 @@
 import React from "react";
 import Matter from "matter-js";
 
-import matterCharacter from '../../../../Game/components/Characters/matterCharacter'
+import matterCharacter from 'Game/components/Characters/matterCharacter'
 
-import Constants from '../../../../Game/components/constants'
-import world from '../../../../Game/components/Boards/world'
-import board from '../../../../Game/components/Boards/board'
+import Constants from 'Game/components/constants'
+import world from 'Game/components/Boards/world'
+import board from 'Game/components/Boards/board'
 
 class Scene extends React.Component {
   constructor(props) {
