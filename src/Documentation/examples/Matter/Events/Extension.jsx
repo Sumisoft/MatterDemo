@@ -1,5 +1,5 @@
 import React from "react";
-import Matter, {Bodies} from "matter-js";
+import Matter from "matter-js";
 
 import devSpace from '../testComponents/devSpace'
 
@@ -13,12 +13,8 @@ class Scene extends React.Component {
     var Engine = Matter.Engine,
       Render = Matter.Render,
       World = Matter.World,
-      Body = Matter.Body,
       Bodies = Matter.Bodies,
       Mouse = Matter.Mouse,
-      Events = Matter.Events,
-      Composite = Matter.Composite,
-      Composites = Matter.Composites,
       MouseConstraint = Matter.MouseConstraint;
 
 

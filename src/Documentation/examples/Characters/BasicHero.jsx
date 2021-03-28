@@ -1,7 +1,6 @@
 import React from "react";
 import Matter from "matter-js";
 
-import matterCharacter from 'Game/components/Characters/matterCharacter'
 
 import Constants from 'Game/components/constants'
 import world from 'Game/components/Boards/world'
@@ -15,12 +14,7 @@ class Scene extends React.Component {
 
   componentDidMount() {
     var Engine = Matter.Engine,
-      Render = Matter.Render,
-      World = Matter.World,
-      Bodies = Matter.Bodies,
-      Mouse = Matter.Mouse,
-      Events = Matter.Events,
-      MouseConstraint = Matter.MouseConstraint;
+      Render = Matter.Render;
 
 
     var constants = new Constants()

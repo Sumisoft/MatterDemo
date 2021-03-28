@@ -1,18 +1,10 @@
 import React from "react";
 import Matter from "matter-js";
 
-import matterCharacter from '../../../../Game/components/Characters/matterCharacter'
 import Constants from '../../../../Game/components/constants'
 import world from '../../../../Game/components/Boards/world'
 import board from '../../../../Game/components/Boards/board'
 
-const CONSTANTS = {
-  height: 400,
-  width: 800,
-  cellsVerical: 10,
-  cellsHorizontal: 8
-
-}
 
 export default class CharacterPallet extends React.Component {
   constructor(props) {
@@ -23,11 +15,7 @@ export default class CharacterPallet extends React.Component {
   componentDidMount() {
     var Engine = Matter.Engine,
       Render = Matter.Render,
-      World = Matter.World,
-      Bodies = Matter.Bodies,
-      Mouse = Matter.Mouse,
-      Events = Matter.Events,
-      MouseConstraint = Matter.MouseConstraint;
+      Events = Matter.Events;
 
 
     var constants = new Constants()
@@ -51,8 +39,6 @@ export default class CharacterPallet extends React.Component {
     gameBoard.board[0][1].addCharacter(2)
     gameBoard.board[0][3].addCharacter(3)
     // gameBoard.board[0][3].addCharacter(4)
-    var targets = []
-
 
 
     Events.on(engine, 'afterUpdate', function(event) {

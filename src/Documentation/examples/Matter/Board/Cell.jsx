@@ -4,7 +4,6 @@ import Matter from "matter-js";
 import cell from '../../../../Game/components/Boards/cell'
 import devSpace from '../testComponents/devSpace'
 
-import {CONSTANTS} from '../../../../Game/components/constants'
 
 class BoardTest extends React.Component {
   constructor(props) {

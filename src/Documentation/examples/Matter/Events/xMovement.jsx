@@ -13,12 +13,9 @@ class Scene extends React.Component {
     var Engine = Matter.Engine,
       Render = Matter.Render,
       World = Matter.World,
-      Body = Matter.Body,
       Bodies = Matter.Bodies,
       Mouse = Matter.Mouse,
       Events = Matter.Events,
-      Composite = Matter.Composite,
-      Composites = Matter.Composites,
       MouseConstraint = Matter.MouseConstraint;
 
 
@@ -34,7 +31,6 @@ class Scene extends React.Component {
       inertia: Infinity, });
     World.add(engine.world, [rectA]);
 
-    var counter = -1
     var dragBody
     var position
 
@@ -73,7 +69,6 @@ class Scene extends React.Component {
     });
 
     Events.on(engine, 'afterUpdate', function(event) {
-          var time = engine.timing.timestamp;
           // console.log( time)
           //
           if( dragBody !== undefined ){

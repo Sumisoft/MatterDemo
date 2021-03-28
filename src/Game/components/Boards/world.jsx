@@ -5,10 +5,6 @@ import Matter from "matter-js";
 // adds a static world
 export default function world( props ){
 
-  var Engine = Matter.Engine,
-    Render = Matter.Render,
-    World = Matter.World,
-    Bodies = Matter.Bodies;
 
 
   var engine = Matter.Engine.create({});
@@ -17,7 +13,7 @@ export default function world( props ){
   const HEIGHT = props.constants.height
   const WIDTH = props.constants.width
 
-  var render = Render.create({
+  var render = Matter.Render.create({
     element: props.ref,
     engine: engine,
     options: {
@@ -27,12 +23,12 @@ export default function world( props ){
     }
   });
 
-  World.add(engine.world, [
+  Matter.World.add(engine.world, [
     // walls
-    Bodies.rectangle(WIDTH/2, -20, WIDTH, 50, { isStatic: true }),
-    Bodies.rectangle(WIDTH/2, HEIGHT+20, WIDTH, 50, { isStatic: true }),
-    Bodies.rectangle(-20, HEIGHT/2, 50, HEIGHT, { isStatic: true }),
-    Bodies.rectangle(WIDTH+20, HEIGHT/2, 50, HEIGHT, { isStatic: true })
+    Matter.Bodies.rectangle(WIDTH/2, -20, WIDTH, 50, { isStatic: true }),
+    Matter.Bodies.rectangle(WIDTH/2, HEIGHT+20, WIDTH, 50, { isStatic: true }),
+    Matter.Bodies.rectangle(-20, HEIGHT/2, 50, HEIGHT, { isStatic: true }),
+    Matter.Bodies.rectangle(WIDTH+20, HEIGHT/2, 50, HEIGHT, { isStatic: true })
   ]);
 
   return {

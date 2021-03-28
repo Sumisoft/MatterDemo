@@ -90,9 +90,9 @@ export class cell{
 
     if( this.occupied === true ) return undefined
     if( this.valid === false ) return undefined
-
-    const health = 3
-    const team = 1
+    // 
+    // const health = 3
+    // const team = 1
 
     //TODO: Create a character in the middle of teh cell
     this.hero = new heros()
