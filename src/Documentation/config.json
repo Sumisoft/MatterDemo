@@ -34,7 +34,19 @@
       "subcategory": "Dualing",
       "title": "Basic Character interaction",
       "description": "Two characters competing",
-      "path": "Characters/DualingCharacters",
+      "path": "Characters/DualingCharacters"
+  },
+
+
+
+  {
+      "category": "Game",
+      "subcategory": "Character Selection",
+      "title": "Character Selection Menu",
+      "description": "Menu for selecting characters to add to the game",
+      "path": "Layout/SelectionMenu",
       "indev": true
   }
+
+
 ]
