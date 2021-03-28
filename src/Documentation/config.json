@@ -13,6 +13,14 @@
       "description": "Game board made from a class",
       "path": "Board/Board"
   },
+  {
+      "category": "Game Board",
+      "subcategory": "Interface",
+      "title": "Add on click",
+      "description": "Adds a character to a cell onclick",
+      "path": "Board/AddOnClick",
+      "indev": true
+  },
 
 
   {
@@ -44,8 +52,7 @@
       "subcategory": "Character Selection",
       "title": "Character Selection Menu",
       "description": "Menu for selecting characters to add to the game",
-      "path": "Layout/SelectionMenu",
-      "indev": true
+      "path": "Layout/SelectionMenu"
   }
 
 

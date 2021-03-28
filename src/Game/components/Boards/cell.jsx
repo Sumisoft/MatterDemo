@@ -50,6 +50,14 @@ export class cell{
     Matter.World.add(engine.world, [this.createBody()]);
   }
 
+  // push key attributes into the body object
+  setParameters( props ){
+    if( props.cellPosition !== undefined) Matter.Body.set(this.body, 'cellPosition', props.cellPosition )
+    if( props.valid !== undefined) Matter.Body.set(this.body, 'valid', props.valid )
+    if( props.occupied !== undefined) Matter.Body.set(this.body, 'occupied', props.occupied )
+
+  }
+
   // returns a static MatterJS body representing the cell
   createBody(){
 
@@ -82,6 +90,13 @@ export class cell{
     this.composite = Matter.Composite.create()
     Matter.Composite.add(this.composite, this.body)
 
+    // push parameters into the cell object
+    this.setParameters({
+      cellPosition: {x: this.cellPosition[0], y: this.cellPosition[1]},
+      occupied: false,
+      valid: true
+    })
+
     return this.composite
   }
 
@@ -90,7 +105,7 @@ export class cell{
 
     if( this.occupied === true ) return undefined
     if( this.valid === false ) return undefined
-    // 
+    //
     // const health = 3
     // const team = 1
 
@@ -111,12 +126,14 @@ export class cell{
 
     this.occupied = true
 
+    // push parameters into the cell object
+    this.setParameters({ occupied: true })
+
+
     return this.hero
   }
 
-  isSelected( body ){
 
-  }
 
   // all the body to move and track the original position
   startMotion(){
