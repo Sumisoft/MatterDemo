@@ -11,18 +11,23 @@ class projectile{
 
   // returns the starting position for the standard projectile
   startingPosition( charObj ){
-    var x = charObj.bodyObj.position.x + charObj.bodyObj.width
+
+    const vertices = charObj.bodyObj.vertices
+    const width = vertices[1].x - vertices[0].x
+    // const height = verticies[1].y - verticies[0].y
+
+    var x = charObj.bodyObj.position.x + width
 
     // invert the starting point to the left side when the
     // character belongs to the enemy group
     if( charObj.group === 1 ){
-      x = charObj.bodyObj.position.x - charObj.bodyObj.width
+      x = charObj.bodyObj.position.x - width
     }
 
     return {
       x: x,
       y: charObj.bodyObj.position.y,
-      r: charObj.bodyObj.width/4
+      r: width/4
     }
   }
 
@@ -47,23 +52,18 @@ class projectile{
     const position = this.startingPosition( charObj )
     const parameters = this.parameters(charObj)
 
-    var projObj = new matterObj({group: charObj.group})
+    var projObj = new matterObj({group: charObj.bodyObj.group})
 
-    console.log( {
+    projObj.projectile(position.x, position.y, position.r)
+
+    projObj.setParameters({
       health: parameters.health,
       objType: 'projectile',
       level: charObj.bodyObj.level,
     })
 
-    console.log( position, parameters)
-    // projObj.setParameters({
-    //   health: parameters.health,
-    //   objType: 'projectile',
-    //   level: charObj.bodyObj.level,
-    // })
-
-    projObj.projectile(position.x, position.y, position.r)
     projObj.setVelocity(parameters.speed, 0)
+    projObj.setFriction()
 
     this.projectiles.push(projObj)
 

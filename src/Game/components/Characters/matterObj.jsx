@@ -13,6 +13,7 @@ class matterObj{
 
   // push key attributes into the body object
   setParameters( props ){
+    console.log( '----', this.bodyObj, props )
     Matter.Body.set(this.bodyObj, 'group', this.group )
     Matter.Body.set(this.bodyObj, 'health', props.health )
     Matter.Body.set(this.bodyObj, 'level', props.level )

@@ -69,7 +69,7 @@ class heros {
     if( lastUpdated > this.projectileRate ){
       console.log('does the chacter get refreshed??')
       this.projectile.add(this.character, props.engine)
-      // this.projectile.garbageCollection(props)
+      this.projectile.garbageCollection(props)
       this.updatedOn = timestamp
     }
 

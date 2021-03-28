@@ -13,9 +13,6 @@ class Scene extends React.Component {
   }
 
   componentDidMount() {
-    var Engine = Matter.Engine,
-      Render = Matter.Render;
-
 
     var constants = new Constants()
     constants.height = 600
@@ -41,16 +38,18 @@ class Scene extends React.Component {
       engine:engine
     })
 
-    console.log( gameBoard.board[0][0].hero)
+    // console.log( gameBoard.board[0][0].hero)
+    // var character = gameBoard.board[0][0].hero
+    // character.projectile.add(character.character, engine)
 
-    // Events.on(engine, 'afterUpdate', function(event) {
-    //   gameBoard.refresh(engine)
-    // });
+    Matter.Events.on(engine, 'afterUpdate', function(event) {
+      gameBoard.refresh(engine)
+    });
 
 
-    Engine.run(engine);
+    Matter.Engine.run(engine);
 
-    Render.run(render);
+    Matter.Render.run(render);
   }
 
   render() {
