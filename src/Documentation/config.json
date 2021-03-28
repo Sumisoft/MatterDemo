@@ -27,7 +27,14 @@
       "subcategory": "Enemy",
       "title": "Simple Enemy",
       "description": "A single enemy is added to the board",
-      "path": "Characters/BasicEnemy",
+      "path": "Characters/BasicEnemy"
+  },
+  {
+      "category": "Character",
+      "subcategory": "Dualing",
+      "title": "Basic Character interaction",
+      "description": "Two characters competing",
+      "path": "Characters/DualingCharacters",
       "indev": true
   }
 ]

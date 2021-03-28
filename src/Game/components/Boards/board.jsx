@@ -175,7 +175,7 @@ export class board{
     enemyObj.add({
       ...props,
       ...{
-        x : 200,
+        x : 500,
         y : props.row*this.cellHeight + this.cellHeight/2  + this.padding[0],
         width: this.cellWidth/2,
         height: this.cellHeight,

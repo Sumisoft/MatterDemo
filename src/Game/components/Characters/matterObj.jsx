@@ -17,6 +17,11 @@ class matterObj{
     Matter.Body.set(this.bodyObj, 'health', props.health )
     Matter.Body.set(this.bodyObj, 'level', props.level )
     Matter.Body.set(this.bodyObj, 'objType', props.objType )
+
+    var velocity = props.velocity
+    if( velocity === undefined ) velocity = {x: 0, y: 0}
+    Matter.Body.set(this.bodyObj, 'prevVelocity', velocity )
+
   }
 
   character( x, y, h, w){

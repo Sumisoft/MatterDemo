@@ -20,15 +20,18 @@ class enemy {
       props.height,
     )
 
+    const velocity = {x: -props.level/10, y: 0}
+
     //TODO: compute health based on current level
     this.character.setParameters({
-      health: 2 + props.level/10,
+      health: 0.1 +  props.level/10,
       level: props.level,
       objType: 'enemy',
+      velocity: velocity
     })
 
 
-    this.character.setVelocity(-props.level/10, 0)
+    this.character.setVelocity(velocity.x, velocity.y)
     this.character.setFriction()
 
     return this.character
@@ -102,7 +105,6 @@ class enemy {
     const lastUpdated = Math.floor((timestamp - this.updatedOn)/1000)
 
     if( lastUpdated > this.projectileRate ){
-      console.log( 'do we get here??')
       this.projectile.add(this.character, props.engine)
       this.projectile.garbageCollection(props)
       this.updatedOn = timestamp

@@ -52,7 +52,6 @@ class projectile{
     const position = this.startingPosition( charObj )
     const parameters = this.parameters(charObj)
 
-    console.log( position, parameters)
     var projObj = new matterObj({group: charObj.bodyObj.group})
 
     projObj.projectile(position.x, position.y, position.r)
