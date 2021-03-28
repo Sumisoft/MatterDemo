@@ -2,15 +2,17 @@
 
 import Matter from "matter-js";
 import cell from './cell'
+import enemy from '../Characters/enemies'
 
 export class board{
 
   constructor( props ){
 
     // default defintions
+    this.enemies = []
     this.board = []
-    this.spacers = []
     this.cells = []
+    this.spacers = []
     this.padding = [0,0,0,0]
     this.constants = {}
 
@@ -167,6 +169,21 @@ export class board{
       props.engine)
   }
 
+  addEnemy(props){
+
+    var enemyObj = new enemy()
+    enemyObj.add({
+      ...props,
+      ...{
+        x : 200,
+        y : props.row*this.cellHeight + this.cellHeight/2  + this.padding[0],
+        width: this.cellWidth/2,
+        height: this.cellHeight,
+      }
+    })
+    this.enemies.push(enemyObj)
+  }
+
 
   // refreshs the cell content. This is responsible for updating
   // the projectiles and performing garbage collection
@@ -183,6 +200,8 @@ export class board{
       .forEach( r => r.hero.refresh(props) ) // garbage collect each cell
     // console.log( this.cells)
 
+
+    this.enemies.forEach( r => r.refresh(props) ) // garbage collect each cell
   }
 
 

@@ -13,7 +13,6 @@ class matterObj{
 
   // push key attributes into the body object
   setParameters( props ){
-    console.log( '----', this.bodyObj, props )
     Matter.Body.set(this.bodyObj, 'group', this.group )
     Matter.Body.set(this.bodyObj, 'health', props.health )
     Matter.Body.set(this.bodyObj, 'level', props.level )
@@ -57,7 +56,7 @@ class matterObj{
         id: 0x0004,
         category: 0x0004,
         mask: 0x0002,
-        color: '#063e7b'
+        color: '#FFFFFF'
       },
     }
 

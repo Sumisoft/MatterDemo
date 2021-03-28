@@ -1,54 +1,64 @@
-import Matter from "matter-js";
-
-
-import matterCharacter from './matterCharacter'
+import matterObj from './matterObj'
 import projectile from './projectile'
 
-class enemy extends matterCharacter{
+class enemy {
 
   constructor(props){
-    super(props)
-    this.charCategory = 1 // define all eneies into category 1
-    this.props = props
+      this.character = new matterObj({group: 1})
+      this.projectile = new projectile({group: 1})
   }
 
 
 
   dragon( props ){
 
-    var params = this.getParams(this.charCategory)
-
-    // replace the color with sprites
-    params.render.strokeStyle = 'red'
-
     // define character's body. parametres defined in matterCharacter.jsx
-    this.rectangle(
-      this.x,
-      this.y,
-      this.charWidth,
-      this.charHeight,
-      params
+    this.character.character(
+      props.x,
+      props.y,
+      props.width,
+      props.height,
     )
 
-    const xVelocity = this.props.level/10
-    this.setVelocity(-xVelocity, 0 )
-    this.setFriction()
+    //TODO: compute health based on current level
+    this.character.setParameters({
+      health: 2 + props.level/10,
+      level: props.level,
+      objType: 'enemy',
+    })
 
-    return this.body
+
+    this.character.setVelocity(-props.level/10, 0)
+    this.character.setFriction()
+
+    return this.character
   }
 
 
   dragonWithFire( props ){
+    // define character's body. parametres defined in matterCharacter.jsx
+    this.character.character(
+      props.x,
+      props.y,
+      props.width,
+      props.height,
+    )
 
-    this.dragon(props)
-
-    this.projectile = new projectile({
-      type: this.type,
-      level: this.level,
-      charCategory: this.charCategory,
+    //TODO: compute health based on current level
+    this.character.setParameters({
+      health: 2 + props.level/10,
+      level: props.level,
+      objType: 'enemy',
     })
 
-    return this.body
+    //
+    // this.character.setVelocity(-props.level/10, 0)
+    // this.character.setFriction()
+
+    this.projectileType = 'single'
+    this.projectileRate = 1 + props.level/10
+
+    return this.character
   }
 
 
@@ -59,7 +69,8 @@ class enemy extends matterCharacter{
   add(props){
 
     var charObj
-    switch( this.props.charType ){
+    switch( props.charType ){
+      case 'dragon':
       case 1 :
         charObj = this.dragon(props)
         break
@@ -74,9 +85,29 @@ class enemy extends matterCharacter{
         break
     }
 
+    charObj.toWorld(props.engine)
     // Matter.World.add(props.engine.world, [charObj]);
 
     return this.body
+  }
+
+
+  // update the world periodically to add projectiles
+  // and remove offscreen objects
+  refresh( props ){
+
+    const timestamp = props.engine.timing.timestamp
+    if( this.updatedOn === undefined ) this.updatedOn = props.engine.timing.timestamp
+
+    const lastUpdated = Math.floor((timestamp - this.updatedOn)/1000)
+
+    if( lastUpdated > this.projectileRate ){
+      console.log( 'do we get here??')
+      this.projectile.add(this.character, props.engine)
+      this.projectile.garbageCollection(props)
+      this.updatedOn = timestamp
+    }
+
   }
 
 }

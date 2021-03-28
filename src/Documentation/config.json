@@ -20,7 +20,14 @@
       "subcategory": "Hero",
       "title": "Simple Hero",
       "description": "A single hero is added to the board",
-      "path": "Characters/BasicHero",
+      "path": "Characters/BasicHero"
+  },
+  {
+      "category": "Character",
+      "subcategory": "Enemy",
+      "title": "Simple Enemy",
+      "description": "A single enemy is added to the board",
+      "path": "Characters/BasicEnemy",
       "indev": true
   }
 ]

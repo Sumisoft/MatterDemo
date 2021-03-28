@@ -41,6 +41,7 @@ class heros {
 
     var charObj
     switch( this.type ){
+      case 'ninja':
       case 1 :
         charObj = this.ninja(props)
         break
@@ -67,7 +68,6 @@ class heros {
     const lastUpdated = Math.floor((timestamp - this.updatedOn)/1000)
 
     if( lastUpdated > this.projectileRate ){
-      console.log('does the chacter get refreshed??')
       this.projectile.add(this.character, props.engine)
       this.projectile.garbageCollection(props)
       this.updatedOn = timestamp

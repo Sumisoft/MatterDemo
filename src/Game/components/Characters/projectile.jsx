@@ -37,7 +37,7 @@ class projectile{
     var speed = 2 + charObj.bodyObj.level/10
 
     //invert the direction for enemies
-    if(charObj.bodyObj.group === 1) speed = -1 * this.speed
+    if(charObj.bodyObj.group === 1) speed = -1 * speed
 
     return {
       health: charObj.bodyObj.level/10,
@@ -52,6 +52,7 @@ class projectile{
     const position = this.startingPosition( charObj )
     const parameters = this.parameters(charObj)
 
+    console.log( position, parameters)
     var projObj = new matterObj({group: charObj.bodyObj.group})
 
     projObj.projectile(position.x, position.y, position.r)
