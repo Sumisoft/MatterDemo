@@ -15,8 +15,8 @@ export default class Board extends React.Component {
   componentDidMount() {
 
     var constants = new Constants()
-    constants.height = 600
-    constants.width = 600
+    constants.height = (this.props.height===undefined) ? 600 : this.props.height
+    constants.width = (this.props.width===undefined) ? 600 : this.props.width
 
     var worldParameter = world({
       ref: this.refs.scene,

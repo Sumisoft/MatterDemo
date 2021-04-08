@@ -7,7 +7,7 @@ import MenuItem from './MenuItem'
 // selection menu driven by a json object containing all available chracters and costs
 export default function SelectionMenu(props){
 
-  const [selected, setSelected] = React.useState(props.selected)
+  const [selected, setSelected] = React.useState((props.selected === undefined) ? {} : props.selected)
 
   // default the callback to set the local state. Do this and
   // also perform the callback when provided from the parent
