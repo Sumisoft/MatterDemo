@@ -34,15 +34,43 @@ export default class Board extends React.Component {
     // var character = gameBoard.board[0][0].hero
     // character.projectile.add(character.character, engine)
 
+    var mouseConstraint = Matter.MouseConstraint.create(engine, {
+      mouse: Matter.Mouse.create(render.canvas),
+      constraint: {
+        stiffness: 0.2,
+        render: {
+          visible: false
+        }
+      }
+    });
+
+
     Matter.Events.on(engine, 'afterUpdate', function(event) {
       gameBoard.refresh(engine)
     });
 
+    Matter.Events.on(mouseConstraint, "mousedown", function(event) {
+      this.addCharacter(event, gameBoard, engine)
+    });
 
     Matter.Engine.run(engine);
 
     Matter.Render.run(render);
   }
+
+  addCharacter(event, gameBoard, engine){
+    const cell = event.source.body;
+    console.log( cell )
+    gameBoard.addHero({
+      row:cell.cellPosition.y,
+      col:cell.cellPosition.x,
+      heroType:1,
+      level:1,
+      engine:engine
+    })
+
+  }
+
 
   render() {
      return <div ref="scene" />;
