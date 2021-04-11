@@ -6,6 +6,8 @@ import Constants from '../../constants'
 import world from '../../Boards/world'
 import board from '../../Boards/board'
 
+import addCharacter from './addCharacter'
+
 export default class Board extends React.Component {
   constructor(props) {
     super(props);
@@ -44,33 +46,26 @@ export default class Board extends React.Component {
       }
     });
 
-
     Matter.Events.on(engine, 'afterUpdate', function(event) {
       gameBoard.refresh(engine)
     });
 
-    Matter.Events.on(mouseConstraint, "mousedown", function(event) {
-      this.addCharacter(event, gameBoard, engine)
-    });
+    // Matter.Events.on(mouseConstraint, "mousedown", function(event) {
+    //   console.log( 'what are the props...', this.props, this.state)
+    //   addCharacter(event, gameBoard, engine, this.props)
+    // });
+    Matter.Events.on(mouseConstraint, "mousedown", this.mouseDown.bind(this))
 
     Matter.Engine.run(engine);
 
     Matter.Render.run(render);
+
+    this.setState({engine: engine, gameBoard: gameBoard})
   }
 
-  addCharacter(event, gameBoard, engine){
-    const cell = event.source.body;
-    console.log( cell )
-    gameBoard.addHero({
-      row:cell.cellPosition.y,
-      col:cell.cellPosition.x,
-      heroType:1,
-      level:1,
-      engine:engine
-    })
-
+  mouseDown( event ){
+    addCharacter({...this.props, ...this.state, ...{event:event}})
   }
-
 
   render() {
      return <div ref="scene" />;

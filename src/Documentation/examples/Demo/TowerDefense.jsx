@@ -10,12 +10,14 @@ const characterJson = [
     name: 'Ninja',
     cost: 10,
     alias: 1,
+    level: 1,
   },
   {
     url: '/images/ninja.png',
     name: 'Panda',
     cost: 20,
     alias: 2,
+    level: 1,
   },
 ]
 

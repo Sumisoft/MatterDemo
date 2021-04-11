@@ -38,12 +38,14 @@ export default class TowerDefense extends React.Component{
         <SelectionMenu
           {...this.props}
           {...this.state}
-          callback = {(val) => this.setState({selected: val})} 
+          stateCallback = {(val) => this.setState(val)}
           />
         <Board
           {...this.props}
+          {...this.state}
           height = {this.state.width/2}
           width = {this.state.width}
+          stateCallback = {(val) => this.setState(val)}
           />
       </div>
     )

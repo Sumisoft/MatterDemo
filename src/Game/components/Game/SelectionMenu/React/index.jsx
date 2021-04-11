@@ -1,21 +1,18 @@
 
 import React from 'react'
-import { Segment } from 'semantic-ui-react'
+import { Segment, Header } from 'semantic-ui-react'
 
 import MenuItem from './MenuItem'
 
 // selection menu driven by a json object containing all available chracters and costs
 export default function SelectionMenu(props){
 
-  const [selected, setSelected] = React.useState((props.selected === undefined) ? {} : props.selected)
-
   // default the callback to set the local state. Do this and
   // also perform the callback when provided from the parent
-  var callback = (val) => setSelected(val)
-  if( props.callback !== undefined ){
+  var callback = (val) => console.log('character selected with no callback', val)
+  if( props.stateCallback !== undefined ){
     callback = (val) => {
-      setSelected(val)
-      props.callback( val)
+      props.stateCallback({selectedChar:val})
     }
   }
 
@@ -24,7 +21,7 @@ export default function SelectionMenu(props){
     segments.push(
       <MenuItem
         character = {r}
-        selected = {(r.name === selected.name)}
+        selected = {(props.selectedChar !== undefined) ? (r.name === props.selectedChar.name) : false}
         callback = {callback}
         col={idx}/>
     )
@@ -32,6 +29,11 @@ export default function SelectionMenu(props){
 
   return(
     <Segment.Group horizontal>
+      <Segment style={{textAlign: 'center'}} >
+        <Header as='h3' style={{margin: '5px'}}>{props.points}</Header>
+        <Header as='h3' style={{margin: '5px'}}>Points</Header>
+      </Segment>
+
       {segments}
     </Segment.Group>
   )
