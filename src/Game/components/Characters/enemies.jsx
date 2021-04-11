@@ -1,3 +1,4 @@
+import Matter from "matter-js";
 import matterObj from './matterObj'
 import projectile from './projectile'
 
@@ -20,7 +21,7 @@ class enemy {
       props.height,
     )
 
-    const velocity = {x: -props.level/10, y: 0}
+    const velocity = {x: -props.level, y: 0}
 
     //TODO: compute health based on current level
     this.character.setParameters({
@@ -108,6 +109,17 @@ class enemy {
       this.projectile.add(this.character, props.engine)
       this.projectile.garbageCollection(props)
       this.updatedOn = timestamp
+    }
+
+
+    const padding = 0
+    // perform callback function to end the game when the enemy enters
+    // the offscreen region on the heros side
+    if( this.character !== undefined ){
+      if( (this.character.bodyObj.position.x < -padding ) ){
+          Matter.World.remove(props.engine.world, this.character.bodyObj);
+          this.character = undefined
+      }
     }
 
   }

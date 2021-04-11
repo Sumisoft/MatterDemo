@@ -32,7 +32,7 @@ class Scene extends React.Component {
 
     gameBoard.addEnemy({
       row:0,
-      charType:2,
+      charType:1,
       level:1,
       engine:engine
     })
