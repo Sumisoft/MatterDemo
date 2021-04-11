@@ -4,4 +4,4 @@ version   timestamp   description
 
 0.0.1   4/11/21   add enemies to board
 0.0.1   4/11/21   enemies end game when hitting one side
-tbd tbd enemies management system (how many, of what type, where and success criteria)
+0.0.2   4/11/21   enemies management system (how many, of what type, where and success criteria)

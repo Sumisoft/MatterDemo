@@ -34,7 +34,8 @@
       "subcategory": "Enemy",
       "title": "Simple Enemy",
       "description": "A single enemy is added to the board",
-      "path": "Characters/BasicEnemy"
+      "path": "Characters/BasicEnemy",
+      "indev": true
   },
   {
       "category": "Character",
@@ -59,8 +60,7 @@
       "subcategory": "Tower Defense",
       "title": "Basic Game",
       "description": "Basic Game Layout use for development",
-      "path": "Demo/TowerDefense",
-      "indev": true
+      "path": "Demo/TowerDefense"
   }
 
 

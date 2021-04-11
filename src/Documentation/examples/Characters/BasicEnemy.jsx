@@ -5,6 +5,29 @@ import Matter from "matter-js";
 import Constants from 'Game/components/constants'
 import world from 'Game/components/Boards/world'
 import board from 'Game/components/Boards/board'
+import enemyManager from 'Game/components/Game/Enemies'
+
+const enemyScript = [
+  {
+    row:0,
+    charType:1,
+    level:1,
+    time: 1,
+  },
+  {
+    row:1,
+    charType:1,
+    level:1,
+    time: 2,
+  },
+  {
+    row:2,
+    charType:1,
+    level:1,
+    time: 3,
+  },
+]
+
 
 class Scene extends React.Component {
   constructor(props) {
@@ -30,12 +53,7 @@ class Scene extends React.Component {
     gameBoard.createBoard()
     gameBoard.addToWorld(engine)
 
-    gameBoard.addEnemy({
-      row:0,
-      charType:1,
-      level:1,
-      engine:engine
-    })
+    new enemyManager(enemyScript, gameBoard, engine)
 
     // console.log( gameBoard.board[0][0].hero)
     // var character = gameBoard.board[0][0].hero
