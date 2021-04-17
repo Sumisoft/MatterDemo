@@ -50,6 +50,7 @@ class Scene extends React.Component {
     var render = worldParameter.render
 
     var gameBoard = new board({constants: constants})
+    gameBoard.callback = this.boardCallback.bind(this)
     gameBoard.createBoard()
     gameBoard.addToWorld(engine)
 
@@ -65,8 +66,17 @@ class Scene extends React.Component {
 
 
     Matter.Engine.run(engine);
-
     Matter.Render.run(render);
+
+    this.setState({engine: engine, render: render, gameBoard: gameBoard})
+
+  }
+
+  boardCallback(val){
+    this.state.engine.enabled  = false
+    // Matter.Render.stop(this.state.render)
+    Matter.Runner.stop(this.state.engine)
+    console.log( 'board callback', this.state )
   }
 
   render() {

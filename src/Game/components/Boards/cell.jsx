@@ -101,11 +101,11 @@ export class cell{
   }
 
   /// create a character that resides within the middle o fthe specified cell
-  addHero( type, level, engine ){
+  addHero( heroType, level, engine ){
 
     if( this.occupied === true ) return undefined
     if( this.valid === false ) return undefined
-    //
+
     // const health = 3
     // const team = 1
 
@@ -114,9 +114,9 @@ export class cell{
     this.hero.add({
       x: this.body.position.x,
       y: this.body.position.y,
-      width: this.cellWidth/2,
+      width: this.cellWidth/4,
       height: this.cellHeight,
-      type: type,
+      heroType: heroType,
       level: level,
       engine: engine,
     })

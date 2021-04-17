@@ -48,6 +48,8 @@ export class board{
     this.cellWidth = (this.boardWidth - spacerBuffer)/this.boardPositions[0]
   }
 
+  get callback(){ return this.callbackFunc }
+  set callback(func){ this.callbackFunc = func }
 
   set constants( value ){
 
@@ -193,6 +195,7 @@ export class board{
       engine: engine,
       boardWidth: this.boardWidth,
       boardHeight: this.boardHeight,
+      callback: this.callbackFunc,
     }
 
     this.cells

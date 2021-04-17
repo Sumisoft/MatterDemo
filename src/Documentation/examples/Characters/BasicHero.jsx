@@ -38,6 +38,14 @@ class Scene extends React.Component {
       engine:engine
     })
 
+    gameBoard.addHero({
+      row:1,
+      col:0,
+      heroType:2,
+      level:1,
+      engine:engine
+    })
+
     // console.log( gameBoard.board[0][0].hero)
     // var character = gameBoard.board[0][0].hero
     // character.projectile.add(character.character, engine)

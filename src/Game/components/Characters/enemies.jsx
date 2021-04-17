@@ -119,6 +119,9 @@ class enemy {
       if( (this.character.bodyObj.position.x < -padding ) ){
           Matter.World.remove(props.engine.world, this.character.bodyObj);
           this.character = undefined
+
+          // perform callback to update parent state
+          if( props.callback !== undefined ) props.callback({group: '1', type:'outOfBounds'})
       }
     }
 

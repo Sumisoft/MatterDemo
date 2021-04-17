@@ -21,10 +21,36 @@ const characterJson = [
   },
 ]
 
+const enemyScript = [
+  {
+    row:0,
+    charType:1,
+    level:1,
+    time: 1,
+  },
+  // {
+  //   row:1,
+  //   charType:1,
+  //   level:1,
+  //   time: 5,
+  // },
+  // {
+  //   row:2,
+  //   charType:1,
+  //   level:1,
+  //   time: 10,
+  // },
+]
+
 // selection Menu test function
 export default function TowerDefenseDemo(props){
 
-  return( <TowerDefense characterJson={characterJson} /> )
+  return(
+    <TowerDefense
+      enemyScript={enemyScript}
+      characterJson={characterJson}
+      />
+  )
 
 }
 

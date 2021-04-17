@@ -5,6 +5,8 @@ import Matter from "matter-js";
 import Constants from '../../constants'
 import world from '../../Boards/world'
 import board from '../../Boards/board'
+import enemyManager from '../Enemies'
+import collision from '../collision'
 
 import addCharacter from './addCharacter'
 
@@ -32,9 +34,11 @@ export default class Board extends React.Component {
     gameBoard.createBoard()
     gameBoard.addToWorld(engine)
 
-    // console.log( gameBoard.board[0][0].hero)
-    // var character = gameBoard.board[0][0].hero
-    // character.projectile.add(character.character, engine)
+    // add enemies based on the provided script
+    if( this.props.enemyScript !== undefined ){
+      new enemyManager(this.props.enemyScript, gameBoard, engine)
+    }
+
 
     var mouseConstraint = Matter.MouseConstraint.create(engine, {
       mouse: Matter.Mouse.create(render.canvas),
@@ -55,6 +59,8 @@ export default class Board extends React.Component {
     //   addCharacter(event, gameBoard, engine, this.props)
     // });
     Matter.Events.on(mouseConstraint, "mousedown", this.mouseDown.bind(this))
+    Matter.Events.on(engine, 'collisionStart', this.collisionStart.bind(this))
+
 
     Matter.Engine.run(engine);
 
@@ -63,8 +69,20 @@ export default class Board extends React.Component {
     this.setState({engine: engine, gameBoard: gameBoard})
   }
 
+  // routines performed when the mouse button is pressed
   mouseDown( event ){
-    addCharacter({...this.props, ...this.state, ...{event:event}})
+    console.log( 'mousedown', this.props, this.state)
+    if(this.props.selectedChar !== undefined ) addCharacter({...this.props, ...this.state, ...{event:event}})
+  }
+
+  // routines performed when a collision occurs
+  collisionStart( event ){
+    var pairs = event.pairs;
+    pairs.forEach(({ bodyA, bodyB }) => {
+      console.log(bodyA.health, bodyB.health)
+      new collision( bodyA, bodyB, this.state.engine )
+
+   });
   }
 
   render() {

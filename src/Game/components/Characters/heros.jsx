@@ -35,15 +35,42 @@ class heros {
     return this.character
   }
 
+  sumo( props ){
+
+    // define character's body. parametres defined in matterCharacter.jsx
+    this.character.character(
+      props.x,
+      props.y,
+      props.width*3,
+      props.height,
+    )
+
+    //TODO: compute health based on current level
+    this.character.setParameters({
+      health: props.level * 5,
+      level: props.level,
+      objType: 'hero',
+    })
+
+    return this.character
+  }
+
+
   /// create a projectile object, add it to the world and
   /// store it into a buffer for future use
   add(props){
 
     var charObj
-    switch( this.type ){
+    switch( props.heroType ){
       case 'ninja':
       case 1 :
         charObj = this.ninja(props)
+        break
+
+      case 'panda':
+      case 'sumo':
+      case 2 :
+        charObj = this.sumo(props)
         break
 
       default :
