@@ -34,8 +34,8 @@ class Scene extends React.Component {
 
     gameBoard.addHero({
       row:0,
-      col:0,
-      heroType:1,
+      col:7,
+      heroType:2,
       level:1,
       engine:engine
     })
@@ -54,7 +54,7 @@ class Scene extends React.Component {
     Matter.Events.on(engine, 'collisionStart', function(event) {
       var pairs = event.pairs;
       pairs.forEach(({ bodyA, bodyB }) => {
-        console.log(bodyA.health, bodyB.health)
+        console.log(bodyA, bodyB)
         new collision( bodyA, bodyB, engine )
 
      });

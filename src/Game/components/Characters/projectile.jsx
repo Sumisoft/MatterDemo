@@ -174,7 +174,7 @@ class projectile{
   // removes offscreen objects
   garbageCollection( props ){
 
-    const padding = 200
+    const padding = 50
     this.projectiles.forEach( (r, idx) => {
       if( (r.bodyObj.position.x > props.boardWidth - padding) |
           (r.bodyObj.position.x < -padding ) |

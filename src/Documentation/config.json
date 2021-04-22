@@ -27,8 +27,7 @@
       "subcategory": "Hero",
       "title": "Simple Hero",
       "description": "A single hero is added to the board",
-      "path": "Characters/BasicHero",
-      "indev": true
+      "path": "Characters/BasicHero"
   },
   {
       "category": "Character",
@@ -42,7 +41,8 @@
       "subcategory": "Dualing",
       "title": "Basic Character interaction",
       "description": "Two characters competing",
-      "path": "Characters/DualingCharacters"
+      "path": "Characters/DualingCharacters",
+      "indev": true
   },
 
 

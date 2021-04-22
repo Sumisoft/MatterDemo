@@ -27,7 +27,7 @@ class enemy {
     this.character.setParameters({
       health: 0.1 +  props.level/10,
       level: props.level,
-      objType: 'enemy',
+      objType: 'character',
       velocity: velocity
     })
 
@@ -52,7 +52,7 @@ class enemy {
     this.character.setParameters({
       health: 2 + props.level/10,
       level: props.level,
-      objType: 'enemy',
+      objType: 'character',
     })
 
     //

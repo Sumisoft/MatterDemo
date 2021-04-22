@@ -17,11 +17,15 @@ class matterObj{
     Matter.Body.set(this.bodyObj, 'health', props.health )
     Matter.Body.set(this.bodyObj, 'level', props.level )
     Matter.Body.set(this.bodyObj, 'objType', props.objType )
+    Matter.Body.set(this.bodyObj, 'state', (props.state === undefined) ? 0 : props.state )
+    Matter.Body.set(this.bodyObj, 'lastUpdated', (props.lastUpdated === undefined) ? null : props.lastUpdated)
 
     var velocity = props.velocity
     if( velocity === undefined ) velocity = {x: 0, y: 0}
     Matter.Body.set(this.bodyObj, 'prevVelocity', velocity )
 
+    // set the character as static when it's a hero, so it doesn't move
+    if( (props.objType === 'character')&(this.group === 0) ) this.setStatic(true)
   }
 
   character( x, y, h, w){
@@ -39,6 +43,8 @@ class matterObj{
     this.bodyObj.frictionAir = 0.0005;
     this.bodyObj.restitution = 0.9;
   }
+
+  setStatic(value=true){ this.bodyObj.isStatic = value}
 
   setVelocity( x, y ){
     Matter.Body.setVelocity( this.bodyObj, {x: x, y: y})

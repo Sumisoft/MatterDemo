@@ -27,11 +27,11 @@ class heros {
     this.character.setParameters({
       health: 2 + props.level/10,
       level: props.level,
-      objType: 'hero',
+      objType: 'character',
     })
 
     this.projectileType = 'single'
-    this.projectileRate = 1 + props.level/10
+    this.projectileRate = 4 + props.level/10
     return this.character
   }
 
@@ -49,7 +49,7 @@ class heros {
     this.character.setParameters({
       health: props.level * 5,
       level: props.level,
-      objType: 'hero',
+      objType: 'character',
     })
 
     return this.character

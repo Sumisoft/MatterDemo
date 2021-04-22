@@ -46,6 +46,22 @@ export class collision {
     return true
   }
 
+  // reduces the health of the hero character when colliding with an enemy
+  character(body1, body2){
+    // do nothing when the object is not a character
+    if( body1.objType !== 'character' ) return
+
+    // reduce the health of the second object and update the object
+    // with the new health value
+    if( (body2.objType !== 'character')&(body2.group === 0) ){
+      body2.health = body2.health - body1.health
+      Matter.Body.set(body2, 'health', body2.health )
+    }
+
+    return
+  }
+
+
   refresh( engine ){
 
     // do nothing when the two objects belong to the same group
@@ -57,6 +73,11 @@ export class collision {
     // remove the object based on the flag status
     if( delFlagA ) Matter.World.remove(engine.world, this.bodyA)
     if( delFlagB ) Matter.World.remove(engine.world, this.bodyB)
+
+    // check if two characters are colliding
+    this.character(this.bodyB, this.bodyA)
+    this.character(this.bodyA, this.bodyB)
+
 
     if( this.bodyA.health <= 0 ) Matter.World.remove(engine.world, this.bodyA)
     if( this.bodyB.health <= 0 ) Matter.World.remove(engine.world, this.bodyB)
